@@ -21,3 +21,8 @@ async function findFirstData({
 }): Promise<User | null> {
   return await prisma.user.findFirst({ where, select });
 }
+
+export default {
+  createData,
+  findFirstData,
+};

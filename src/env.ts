@@ -11,13 +11,17 @@ console.log(`DB_URL: ${process.env.DB_URL}`);
 console.log(`PORT: ${process.env.PORT}`);
 
 export const config: {
-  DB_URL: string | undefined;
-  PORT: string | undefined;
-  ACCESS_TOKEN_SECRET: string | undefined;
-  REFRESH_TOKEN_SECRET: string | undefined;
+  DB_URL: string;
+  PORT: string;
+  ACCESS_TOKEN_SECRET: string;
+  REFRESH_TOKEN_SECRET: string;
+  ARGON2_SECRET_KEY: string;
+  ARGON2_SALT: number;
 } = {
-  DB_URL: process.env.DB_URL,
-  PORT: process.env.PORT,
-  ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
-  REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
+  DB_URL: process.env.DB_URL as string,
+  PORT: process.env.PORT as string,
+  ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET as string,
+  REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET as string,
+  ARGON2_SECRET_KEY: process.env.ARGON2_SECRET_KEY as string,
+  ARGON2_SALT: Number(process.env.ARGON2_SALT) || 16,
 };
