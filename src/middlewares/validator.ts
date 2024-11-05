@@ -11,7 +11,7 @@ import { userSchema } from "../constants/user";
 
 const validateBodyEmail: ValidationChain = body("email")
   .notEmpty()
-  .withMessage("이메일 입력이 필요합니다")
+  .withMessage("이메일을 입력해주세요")
   .isEmail()
   .withMessage("이메일 형식이 아닙니다")
   .isLength({ max: userSchema.MAX_LENGTH_EMAIL })
@@ -21,7 +21,7 @@ const validateBodyEmail: ValidationChain = body("email")
 
 const validateBodyPassword: ValidationChain = body("password")
   .notEmpty()
-  .withMessage("비밀번호 입력이 필요합니다")
+  .withMessage("비밀번호를 입력해주세요")
   .isLength({
     min: userSchema.MIN_LENGTH_PASSWORD,
     max: userSchema.MAX_LENGTH_PASSWORD,
@@ -32,13 +32,24 @@ const validateBodyPassword: ValidationChain = body("password")
 
 const validateBodyNickname: ValidationChain = body("nickname")
   .notEmpty()
-  .withMessage("닉네임 입력이 필요합니다")
+  .withMessage("닉네임을 입력해주세요")
   .isLength({
     min: userSchema.MIN_LENGTH_NICKNAME,
     max: userSchema.MAX_LENGTH_NICKNAME,
   })
   .withMessage(
     `닉네임은 ${userSchema.MIN_LENGTH_NICKNAME} ~ ${userSchema.MAX_LENGTH_NICKNAME}자로 입력해주세요`
+  );
+
+const validateBodyName: ValidationChain = body("name")
+  .notEmpty()
+  .withMessage("이름을 입력해주세요")
+  .isLength({
+    min: userSchema.MIN_LENGTH_NAME,
+    max: userSchema.MAX_LENGTH_NAME,
+  })
+  .withMessage(
+    `이름은 ${userSchema.MIN_LENGTH_NAME} ~ ${userSchema.MAX_LENGTH_NAME}자로 입력해주세요`
   );
 
 export const validateSignUp: ValidationChain[] = [
