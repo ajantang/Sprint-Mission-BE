@@ -24,7 +24,7 @@ async function signUp({
 async function signIn({
   email,
   password,
-}: userSignInData): Promise<User | null> {
+}: userSignInData): Promise<User | null | boolean> {
   return prisma.$transaction(async () => {
     const userWhere = { email: email };
     const findUserData = await userRepository.findFirstData({
@@ -32,7 +32,7 @@ async function signIn({
     });
 
     if (!findUserData) {
-      return null; // 커스텀 에러 예정. "이메일이 존재하지 않습니다"
+      return null;
     }
 
     const isMatch = await verifyPassword(
@@ -41,9 +41,11 @@ async function signIn({
     );
 
     if (isMatch) {
-      return null; // 커스텀 에러 예정. "비밀번호가 일치하지 않습니다"
+      return false;
     }
 
     return findUserData;
   });
 }
+
+export default { signUp, signIn };
