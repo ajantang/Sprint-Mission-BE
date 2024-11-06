@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
 
 import authService from "../services/auth-service";
+
 import { userSignUpData } from "../types/user-types";
 
 async function signUp(
@@ -33,7 +34,7 @@ async function signIn(
   next: NextFunction
 ): Promise<any> {
   try {
-    const { email, password, nickname, name }: userSignUpData = req.body;
+    const { email, password }: userSignUpData = req.body;
     const authInfo = await authService.signIn({
       email,
       password,
@@ -53,4 +54,19 @@ async function signIn(
   }
 }
 
-export default { signUp, signIn };
+async function refreshAccessToken(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<any> {
+  try {
+    const { refreshToken }: { refreshToken: string } = req.body;
+    const newRefreshToken = authService.refreshAccessToken(refreshToken);
+
+    return res.status(200).send(newRefreshToken);
+  } catch (err) {
+    return next(err);
+  }
+}
+
+export default { signUp, signIn, refreshAccessToken };

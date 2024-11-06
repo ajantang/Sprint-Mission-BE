@@ -1,9 +1,15 @@
 import prisma from "../repositories/prisma";
 import { User } from "@prisma/client";
+import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 
 import { hashPassword, verifyPassword } from "../utils/password";
 import userRepository from "../repositories/user-repository";
 import { userSignUpData, userSignInData } from "../types/user-types";
+import {
+  createAccessToken,
+  createRefreshToken,
+  extractUserIdFromRefreshToken,
+} from "../utils/token";
 
 async function signUp({
   email,
@@ -48,4 +54,17 @@ async function signIn({
   });
 }
 
-export default { signUp, signIn };
+async function refreshAccessToken(
+  refreshToken: string
+): Promise<string | Error> {
+  const userId: string | JsonWebTokenError | TokenExpiredError | Error =
+    extractUserIdFromRefreshToken(refreshToken);
+
+  if (typeof userId === "string") {
+    return createAccessToken(userId);
+  }
+
+  return new Error("refresh token error"); // 커스텀 에러 예정
+}
+
+export default { signUp, signIn, refreshAccessToken };

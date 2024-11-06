@@ -1,0 +1,34 @@
+import jwt, { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
+
+import { ACCESS_TOKEN_EXPIRY, REFRESH_TOKEN_EXPIRY } from "../constants/token";
+import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from "../config";
+
+export function createAccessToken(userId: string): string {
+  return jwt.sign({ id: userId }, ACCESS_TOKEN_SECRET, {
+    expiresIn: ACCESS_TOKEN_EXPIRY,
+  });
+}
+
+export function createRefreshToken(userId: string): string {
+  return jwt.sign({ id: userId }, REFRESH_TOKEN_SECRET, {
+    expiresIn: REFRESH_TOKEN_EXPIRY,
+  });
+}
+
+export function extractUserIdFromRefreshToken(
+  refreshToken: string
+): string | JsonWebTokenError | TokenExpiredError | Error {
+  try {
+    const decoded = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET) as {
+      id: string;
+    };
+
+    return decoded.id;
+  } catch (err: unknown) {
+    if (err instanceof JsonWebTokenError) {
+      return err;
+    }
+
+    return new Error("extract userId unknown error"); // 커스텀 에러 예정
+  }
+}
