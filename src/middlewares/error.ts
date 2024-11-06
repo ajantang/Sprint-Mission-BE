@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { RequestHandler, Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 import { validationResult, Result, ValidationError } from "express-validator";
 
 import { CustomError } from "../utils/error";

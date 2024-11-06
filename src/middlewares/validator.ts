@@ -1,10 +1,4 @@
-import {
-  header,
-  query,
-  body,
-  validationResult,
-  ValidationChain,
-} from "express-validator";
+import { header, query, body, ValidationChain } from "express-validator";
 
 import { userSchema } from "../constants/user";
 import {
