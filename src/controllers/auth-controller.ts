@@ -1,17 +1,18 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
+import { User } from "@prisma/client";
 
 import authService from "../services/auth-service";
 
-import { userSignUpData } from "../types/user-types";
+import { userSignUpData, userTokenInfo } from "../types/user-types";
 
 async function signUp(
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<any> {
+): Promise<void> {
   try {
     const { email, password, nickname, name }: userSignUpData = req.body;
-    const authInfo = await authService.signUp({
+    const authInfo: User | null = await authService.signUp({
       email,
       password,
       nickname,
@@ -19,10 +20,11 @@ async function signUp(
     });
 
     if (authInfo === null) {
-      return res.status(500).send("계정 생성에 실패하였습니다"); // 커스텀 에러 예정.
+      res.status(500).send("계정 생성에 실패하였습니다"); // 커스텀 에러 예정.
+      return;
     }
 
-    return res.status(201).send(authInfo);
+    res.status(201).send(authInfo);
   } catch (err) {
     next(err);
   }
@@ -32,23 +34,25 @@ async function signIn(
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<any> {
+): Promise<void> {
   try {
     const { email, password }: userSignUpData = req.body;
-    const authInfo = await authService.signIn({
+    const authInfo: userTokenInfo | null | boolean = await authService.signIn({
       email,
       password,
     });
 
     if (authInfo === null) {
-      return res.status(400).send("이메일 또는 비밀번호가 일치하지 않습니다"); // 커스텀 에러 예정. 사용자 정보가 없습니다
+      res.status(400).send("이메일 또는 비밀번호가 일치하지 않습니다"); // 커스텀 에러 예정. 사용자 정보가 없습니다
+      return;
     }
 
     if (authInfo === false) {
-      return res.status(400).send("이메일 또는 비밀번호가 일치하지 않습니다"); // 커스텀 에러 예정. 비밀번호가 일치하지 않습니다
+      res.status(400).send("이메일 또는 비밀번호가 일치하지 않습니다"); // 커스텀 에러 예정. 비밀번호가 일치하지 않습니다
+      return;
     }
 
-    return res.status(200).send(authInfo);
+    res.status(200).send(authInfo);
   } catch (err) {
     next(err);
   }
@@ -58,14 +62,16 @@ async function refreshAccessToken(
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<any> {
+): Promise<void> {
   try {
     const { refreshToken }: { refreshToken: string } = req.body;
-    const newRefreshToken = authService.refreshAccessToken(refreshToken);
+    const newAccessToken: string | Error = await authService.refreshAccessToken(
+      refreshToken
+    );
 
-    return res.status(200).send(newRefreshToken);
+    res.status(200).send({ accessToken: newAccessToken });
   } catch (err) {
-    return next(err);
+    next(err);
   }
 }
 

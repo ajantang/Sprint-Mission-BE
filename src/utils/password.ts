@@ -19,10 +19,13 @@ export async function hashPassword(password: string): Promise<string> {
   }
 }
 
-export async function verifyPassword(
-  hashedPassword: string,
-  plainPassword: string
-): Promise<boolean> {
+export async function verifyPassword({
+  hashedPassword,
+  plainPassword,
+}: {
+  hashedPassword: string;
+  plainPassword: string;
+}): Promise<boolean> {
   try {
     const isMatch = await argon2.verify(hashedPassword, plainPassword);
     return isMatch;
