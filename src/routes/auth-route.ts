@@ -4,29 +4,19 @@ import {
   validateSignIp,
   validateSignUp,
   validateRefreshAccessToken,
-  handleValidationErrors,
 } from "../middlewares/validator";
+import { ValidationHandler } from "../middlewares/error";
 import authController from "../controllers/auth-controller";
 
 const authRouter: Router = express.Router();
 
 authRouter
-  .post(
-    "/sign-up",
-    validateSignUp,
-    handleValidationErrors,
-    authController.signUp
-  )
-  .post(
-    "/sign-in",
-    validateSignIp,
-    handleValidationErrors,
-    authController.signIn
-  )
+  .post("/sign-up", validateSignUp, ValidationHandler, authController.signUp)
+  .post("/sign-in", validateSignIp, ValidationHandler, authController.signIn)
   .post(
     "/refreshAccessToken",
     validateRefreshAccessToken,
-    handleValidationErrors,
+    ValidationHandler,
     authController.refreshAccessToken
   );
 

@@ -46,7 +46,7 @@ async function signIn({
 }: userSignInData): Promise<userTokenInfo | null | boolean> {
   return prisma.$transaction(async () => {
     const userWhere = { email: email };
-    const findUserData = await userRepository.findFirstData({
+    const findUserData = await userRepository.findFirstOrThrowData({
       where: userWhere,
       select: userIdentificationSelect,
     });

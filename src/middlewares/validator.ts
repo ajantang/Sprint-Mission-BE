@@ -1,4 +1,3 @@
-import { RequestHandler, Request, Response, NextFunction } from "express";
 import {
   header,
   query,
@@ -8,55 +7,59 @@ import {
 } from "express-validator";
 
 import { userSchema } from "../constants/user";
+import {
+  CUSTOM_ERROR_INFO,
+  EMPTY_ERROR_MESSAGES,
+  LENGTH_ERROR_MESSAGES,
+  PATTERN_ERROR_MESSAGES,
+} from "../constants/error";
 
 const validateBodyEmail: ValidationChain = body("email")
   .notEmpty()
-  .withMessage("이메일을 입력해주세요")
+  .withMessage(EMPTY_ERROR_MESSAGES["email"])
+  .bail()
   .isEmail()
-  .withMessage("이메일 형식이 아닙니다")
+  .withMessage(PATTERN_ERROR_MESSAGES["email"])
+  .bail()
   .isLength({ max: userSchema.MAX_LENGTH_EMAIL })
-  .withMessage(
-    `이메일 최대 길이(${userSchema.MAX_LENGTH_EMAIL})를 초과하였습니다`
-  );
+  .withMessage(LENGTH_ERROR_MESSAGES["email"]);
 
 const validateBodyPassword: ValidationChain = body("password")
   .notEmpty()
-  .withMessage("비밀번호를 입력해주세요")
+  .withMessage(EMPTY_ERROR_MESSAGES["password"])
+  .bail()
   .isLength({
     min: userSchema.MIN_LENGTH_PASSWORD,
     max: userSchema.MAX_LENGTH_PASSWORD,
   })
-  .withMessage(
-    `비밀번호는 ${userSchema.MIN_LENGTH_PASSWORD} ~ ${userSchema.MAX_LENGTH_PASSWORD}자로 입력해주세요`
-  );
+  .withMessage(LENGTH_ERROR_MESSAGES["password"]);
 
 const validateBodyNickname: ValidationChain = body("nickname")
   .notEmpty()
-  .withMessage("닉네임을 입력해주세요")
+  .withMessage(EMPTY_ERROR_MESSAGES["nickname"])
+  .bail()
   .isLength({
     min: userSchema.MIN_LENGTH_NICKNAME,
     max: userSchema.MAX_LENGTH_NICKNAME,
   })
-  .withMessage(
-    `닉네임은 ${userSchema.MIN_LENGTH_NICKNAME} ~ ${userSchema.MAX_LENGTH_NICKNAME}자로 입력해주세요`
-  );
+  .withMessage(LENGTH_ERROR_MESSAGES["nickname"]);
 
 const validateBodyName: ValidationChain = body("name")
   .notEmpty()
-  .withMessage("이름을 입력해주세요")
+  .withMessage(EMPTY_ERROR_MESSAGES["name"])
+  .bail()
   .isLength({
     min: userSchema.MIN_LENGTH_NAME,
     max: userSchema.MAX_LENGTH_NAME,
   })
-  .withMessage(
-    `이름은 ${userSchema.MIN_LENGTH_NAME} ~ ${userSchema.MAX_LENGTH_NAME}자로 입력해주세요`
-  );
+  .withMessage(LENGTH_ERROR_MESSAGES["name"]);
 
 const validateBodyRefreshToken: ValidationChain = body("refreshToken")
   .notEmpty()
-  .withMessage(`토큰 정보가 필요합니다`)
+  .withMessage(EMPTY_ERROR_MESSAGES["token"])
+  .bail()
   .isJWT()
-  .withMessage(`토큰 형식이 유효하지 않습니다`);
+  .withMessage(PATTERN_ERROR_MESSAGES["token"]);
 
 export const validateSignUp: ValidationChain[] = [
   validateBodyEmail,
@@ -73,15 +76,3 @@ export const validateSignIp: ValidationChain[] = [
 export const validateRefreshAccessToken: ValidationChain[] = [
   validateBodyRefreshToken,
 ];
-
-export function handleValidationErrors(
-  req: Request,
-  res: Response,
-  next: NextFunction
-): void {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    res.status(400).json({ errors: errors.array()[0].msg });
-  }
-  next();
-}
