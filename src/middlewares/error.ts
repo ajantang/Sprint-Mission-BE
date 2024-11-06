@@ -1,6 +1,10 @@
+import { Prisma } from "@prisma/client";
 import { RequestHandler, Request, Response, NextFunction } from "express";
 import { validationResult, Result, ValidationError } from "express-validator";
+
 import { CustomError } from "../utils/error";
+
+import { CUSTOM_ERROR_INFO } from "../constants/error";
 
 export function logErrors(
   err: Error,
@@ -38,6 +42,23 @@ export function clientErrorHandler(
     return;
   }
 
+  if (err instanceof Prisma.PrismaClientKnownRequestError) {
+    if (err.code === "P2002") {
+      res.status(409).send({
+        message: CUSTOM_ERROR_INFO[40901] + ": " + err.meta?.target,
+      });
+      return;
+    }
+
+    if (err.code === "P2025") {
+      res.status(404).send({ message: CUSTOM_ERROR_INFO[40400] });
+      return;
+    }
+
+    res.status(400).send({ message: err.message });
+    return;
+  }
+
   next(err);
 }
 
@@ -47,5 +68,20 @@ export function serverErrorHandler(
   res: Response,
   next: NextFunction
 ): void {
-  res.status(600).send({ message: err.message });
+  if (err instanceof Prisma.PrismaClientRustPanicError) {
+    res.status(500).send({ message: "Internal server error: " + err.message });
+    return;
+  }
+
+  if (err instanceof Prisma.PrismaClientUnknownRequestError) {
+    res.status(500).send({ message: "Unknown request error: " + err.message });
+    return;
+  }
+
+  if (err instanceof Prisma.PrismaClientInitializationError) {
+    res.status(500).send({ message: "Initialization error: " + err.message });
+    return;
+  }
+
+  res.status(500).send({ message: err.message });
 }

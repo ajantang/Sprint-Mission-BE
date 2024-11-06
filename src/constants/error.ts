@@ -26,6 +26,7 @@ export const CUSTOM_ERROR_INFO: { [errCode: number]: string } = {
   40600: "Not Acceptable",
   40800: "Request Timeout",
   40900: "Conflict",
+  40901: "중복된(불가능한) 정보입니다",
   41100: "Length Required",
   41300: "Content Too Large",
   41400: "URI Too Long",
