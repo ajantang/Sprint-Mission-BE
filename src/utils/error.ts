@@ -9,16 +9,3 @@ export class CustomError extends Error {
     Object.setPrototypeOf(this, CustomError.prototype);
   }
 }
-
-export function throwCustomError({
-  condition,
-  errCode,
-}: {
-  condition: boolean;
-  errCode: number;
-}): void {
-  console.log("throwCustomError : ", condition, ", ", errCode);
-  if (condition) {
-    throw new CustomError(errCode);
-  }
-}

@@ -1,6 +1,6 @@
 import { RequestHandler, Request, Response, NextFunction } from "express";
 import { validationResult, Result, ValidationError } from "express-validator";
-import { CustomError, throwCustomError } from "../utils/error";
+import { CustomError } from "../utils/error";
 
 export function logErrors(
   err: Error,

@@ -1,7 +1,8 @@
-import { Request, Response, NextFunction, RequestHandler } from "express";
+import { Request, Response, NextFunction } from "express";
 import { User } from "@prisma/client";
 
 import authService from "../services/auth-service";
+import { CustomError } from "../utils/error";
 
 import { userSignUpData, userTokenInfo } from "../types/user-types";
 
@@ -20,8 +21,7 @@ async function signUp(
     });
 
     if (authInfo === null) {
-      res.status(500).send("계정 생성에 실패하였습니다"); // 커스텀 에러 예정.
-      return;
+      throw new CustomError(50010);
     }
 
     res.status(201).send(authInfo);
@@ -43,13 +43,11 @@ async function signIn(
     });
 
     if (authInfo === null) {
-      res.status(400).send("이메일 또는 비밀번호가 일치하지 않습니다"); // 커스텀 에러 예정. 사용자 정보가 없습니다
-      return;
+      throw new CustomError(40050);
     }
 
     if (authInfo === false) {
-      res.status(400).send("이메일 또는 비밀번호가 일치하지 않습니다"); // 커스텀 에러 예정. 비밀번호가 일치하지 않습니다
-      return;
+      throw new CustomError(40051);
     }
 
     res.status(200).send(authInfo);

@@ -2,6 +2,8 @@ import { userSchema } from "./user";
 
 export const CUSTOM_ERROR_INFO: { [errCode: number]: string } = {
   40000: "클라이언트 에러입니다",
+  40050: "이메일 또는 비밀번호가 일치하지 않습니다", // "일치하는 이메일이 없습니다"
+  40051: "이메일 또는 비밀번호가 일치하지 않습니다", // "비밀번호가 일치하지 않습니다"
   40070: "email 정보가 필요합니다",
   40071: "password는 정보가 필요합니다",
   40072: "nickname은 정보가 필요합니다",
@@ -29,6 +31,7 @@ export const CUSTOM_ERROR_INFO: { [errCode: number]: string } = {
   41400: "URI Too Long",
   41500: "Unsupported Media Type",
   50000: "서버 에러입니다",
+  50010: "계정 생성에 실패하였습니다",
 };
 
 export const EMPTY_ERROR_MESSAGES: { [errVariable: string]: string } = {
