@@ -62,3 +62,6 @@ yarn-error.log*
 
 ### http test ###
 /http
+
+### js files ###
+dist/

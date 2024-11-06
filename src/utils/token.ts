@@ -1,4 +1,10 @@
-import jwt, { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
+import jwt, {
+  JsonWebTokenError,
+  JwtPayload,
+  TokenExpiredError,
+} from "jsonwebtoken";
+
+import { CustomError } from "./error";
 
 import { ACCESS_TOKEN_EXPIRY, REFRESH_TOKEN_EXPIRY } from "../constants/token";
 import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from "../config";
@@ -17,7 +23,7 @@ export function createRefreshToken(userId: string): string {
 
 export function extractUserIdFromRefreshToken(
   refreshToken: string
-): string | JsonWebTokenError | TokenExpiredError | Error {
+): string | JsonWebTokenError | TokenExpiredError | CustomError {
   try {
     const decoded = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET) as {
       id: string;
@@ -26,9 +32,26 @@ export function extractUserIdFromRefreshToken(
     return decoded.id;
   } catch (err: unknown) {
     if (err instanceof JsonWebTokenError) {
-      return err;
+      return err; // 커스텀 에러 예정
     }
 
-    return new Error("extract userId unknown error"); // 커스텀 에러 예정
+    return new CustomError(50020);
+  }
+}
+
+export function validateAccessToken(
+  token: string
+): string | JwtPayload | CustomError {
+  try {
+    const decoded = jwt.verify(token, ACCESS_TOKEN_SECRET) as JwtPayload;
+
+    if (typeof decoded.id === "string") {
+      console.log("decoded.id === string : ", decoded.id);
+      return decoded.id;
+    }
+    console.log("decoded.id !== string : ", decoded);
+    return new CustomError(40069);
+  } catch (err) {
+    return new CustomError(40069);
   }
 }

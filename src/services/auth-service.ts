@@ -20,6 +20,7 @@ import {
   userBaseSelect,
   userIdentificationSelect,
 } from "./selectors/user-select";
+import { CustomError } from "../utils/error";
 
 async function signUp({
   email,
@@ -78,14 +79,14 @@ async function signIn({
 async function refreshAccessToken(
   refreshToken: string
 ): Promise<string | Error> {
-  const userId: string | JsonWebTokenError | TokenExpiredError | Error =
+  const userId: string | JsonWebTokenError | TokenExpiredError | CustomError =
     extractUserIdFromRefreshToken(refreshToken);
 
   if (typeof userId === "string") {
     return createAccessToken(userId);
   }
 
-  return new Error("refresh token error"); // 커스텀 에러 예정
+  return userId;
 }
 
 export default { signUp, signIn, refreshAccessToken };

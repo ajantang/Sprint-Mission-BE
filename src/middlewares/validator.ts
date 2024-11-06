@@ -70,3 +70,12 @@ export const validateSignIp: ValidationChain[] = [
 export const validateRefreshAccessToken: ValidationChain[] = [
   validateBodyRefreshToken,
 ];
+
+const validateHeaderToken: ValidationChain = header("authorization")
+  .notEmpty()
+  .withMessage(CUSTOM_ERROR_INFO[40100])
+  .bail()
+  .isJWT()
+  .withMessage(PATTERN_ERROR_MESSAGES["token"]);
+
+export const validateAuthorization: ValidationChain[] = [validateHeaderToken];

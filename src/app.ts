@@ -2,6 +2,7 @@ import express, { Express } from "express";
 
 import { PORT } from "./config";
 import authRouter from "./routes/auth-route";
+import postRouter from "./routes/post-route";
 import {
   logErrors,
   clientErrorHandler,
@@ -13,6 +14,7 @@ const app: Express = express();
 app.use(express.json());
 
 app.use("/auth", authRouter);
+app.use("/posts", postRouter);
 
 app.use(logErrors);
 app.use(clientErrorHandler);
