@@ -52,10 +52,17 @@ const validateBodyName: ValidationChain = body("name")
     `이름은 ${userSchema.MIN_LENGTH_NAME} ~ ${userSchema.MAX_LENGTH_NAME}자로 입력해주세요`
   );
 
+const validateBodyRefreshToken: ValidationChain = body("refreshToken")
+  .notEmpty()
+  .withMessage(`토큰 정보가 필요합니다`)
+  .isJWT()
+  .withMessage(`토큰 형식이 유효하지 않습니다`);
+
 export const validateSignUp: ValidationChain[] = [
   validateBodyEmail,
   validateBodyPassword,
   validateBodyNickname,
+  validateBodyName,
 ];
 
 export const validateSignIp: ValidationChain[] = [
@@ -63,14 +70,18 @@ export const validateSignIp: ValidationChain[] = [
   validateBodyPassword,
 ];
 
+export const validateRefreshAccessToken: ValidationChain[] = [
+  validateBodyRefreshToken,
+];
+
 export function handleValidationErrors(
   req: Request,
   res: Response,
   next: NextFunction
-): void | Response<any, Record<string, any>> {
+): void {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+    res.status(400).json({ errors: errors.array()[0].msg });
   }
-  return next();
+  next();
 }
