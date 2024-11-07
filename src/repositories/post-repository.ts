@@ -1,24 +1,24 @@
 import { Prisma, Post } from "@prisma/client";
 
 import prisma from "./prisma";
+import {
+  postCreateDataParam,
+  postFindUniqueOrThrowDataParam,
+  postFindManyByPaginationParam,
+  postUpdateDataParam,
+} from "../types/post-types";
 
 async function createData({
   data,
   select,
-}: {
-  data: Prisma.PostCreateInput;
-  select?: Prisma.PostSelect;
-}): Promise<Post | null> {
+}: postCreateDataParam): Promise<Post | null> {
   return await prisma.post.create({ data, select });
 }
 
 async function findUniqueOrThrowData({
   where,
   select,
-}: {
-  where: Prisma.PostWhereUniqueInput;
-  select?: Prisma.PostSelect;
-}): Promise<Post> {
+}: postFindUniqueOrThrowDataParam): Promise<Post> {
   return await prisma.post.findUniqueOrThrow({ where, select });
 }
 
@@ -32,15 +32,7 @@ async function findManyByPaginationData({
   take,
   where,
   select,
-}: {
-  orderBy:
-    | Prisma.PostOrderByWithRelationInput
-    | Prisma.PostOrderByWithRelationInput[];
-  skip: number;
-  take: number;
-  where: Prisma.PostWhereInput;
-  select?: Prisma.PostSelect;
-}): Promise<Post[]> {
+}: postFindManyByPaginationParam): Promise<Post[]> {
   return await prisma.post.findMany({ orderBy, skip, take, where, select });
 }
 
@@ -48,11 +40,7 @@ async function updateData({
   where,
   data,
   select,
-}: {
-  where: Prisma.PostWhereUniqueInput;
-  data: Prisma.PostUpdateInput;
-  select?: Prisma.PostSelect;
-}): Promise<Post | null> {
+}: postUpdateDataParam): Promise<Post | null> {
   return await prisma.post.update({ where, data, select });
 }
 
