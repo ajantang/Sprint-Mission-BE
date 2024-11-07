@@ -38,7 +38,7 @@ model User {
 
 model Product {
     id            String   @id @default(uuid()) @db.VarChar(36)
-    user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    User          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId        String   @map("user_id")
     name          String   @db.VarChar(50)
     description   String   @db.VarChar(1024)
@@ -57,9 +57,9 @@ model Product {
 
 model FavoriteProduct {
     id        String   @id @default(uuid()) @db.VarChar(36)
-    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId    String   @map("user_id")
-    product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+    Product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
     productId String   @map("product_id")
     createdAt DateTime @default(now()) @map("created_at")
     updatedAt DateTime @updatedAt @map("updated_at")
@@ -70,7 +70,7 @@ model FavoriteProduct {
 
 model ProductTag {
     id        String   @id @default(uuid()) @db.VarChar(36)
-    product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+    Product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
     productId String   @map("product_id")
     tag       String   @db.VarChar(50)
     createdAt DateTime @default(now()) @map("created_at")
@@ -81,7 +81,7 @@ model ProductTag {
 
 model ProductImage {
     id        String   @id @default(uuid()) @db.VarChar(36)
-    product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+    Product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
     productId String   @map("product_id")
     image     String   @db.VarChar(2048)
     createdAt DateTime @default(now()) @map("created_at")
@@ -92,7 +92,7 @@ model ProductImage {
 
 model ProductComment {
     id        String   @id @default(uuid()) @db.VarChar(36)
-    product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+    Product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
     productId String   @map("product_id")
     content   String   @db.VarChar(500)
     User      User?    @relation(fields: [userId], references: [id])
@@ -105,7 +105,7 @@ model ProductComment {
 
 model Post {
     id            String   @id @default(uuid()) @db.VarChar(36)
-    user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    User          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId        String   @map("user_id")
     title         String   @db.VarChar(50)
     content       String   @db.VarChar(1024)
@@ -122,7 +122,7 @@ model Post {
 
 model PostImage {
     id        String   @id @default(uuid()) @db.VarChar(36)
-    post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+    Post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
     postId    String   @map("post_id")
     image     String   @db.VarChar(2048)
     createdAt DateTime @default(now()) @map("created_at")
@@ -133,7 +133,7 @@ model PostImage {
 
 model FavoritePost {
     id        String   @id @default(uuid()) @db.VarChar(36)
-    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId    String   @map("user_id")
     Post      Post     @relation(fields: [PostId], references: [id], onDelete: Cascade)
     PostId    String   @map("post_id")
@@ -146,7 +146,7 @@ model FavoritePost {
 
 model PostComment {
     id        String   @id @default(uuid()) @db.VarChar(36)
-    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId    String   @map("user_id")
     Post      Post     @relation(fields: [PostId], references: [id], onDelete: Cascade)
     PostId    String   @map("post_id")

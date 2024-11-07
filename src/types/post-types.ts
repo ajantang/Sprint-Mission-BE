@@ -22,14 +22,18 @@ interface postPagenationInput {
   skip: number;
   take: number;
 }
+
 export interface postCreateDataParam extends postCreateInput, postSelect {}
+
 export interface postFindUniqueOrThrowDataParam
   extends postWhereUniqueInput,
     postSelect {}
+
 export interface postFindManyByPaginationParam
   extends postPagenationInput,
     postWhereInput,
     postSelect {}
+
 export interface postUpdateDataParam
   extends postWhereUniqueInput,
     postUpdateInput,
