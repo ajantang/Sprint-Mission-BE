@@ -84,8 +84,16 @@ const validateHeaderToken: ValidationChain = header("authorization")
   .notEmpty()
   .withMessage(CUSTOM_ERROR_INFO[40100])
   .bail()
-  .isJWT()
-  .withMessage(PATTERN_ERROR_MESSAGES["token"]);
+  .custom((value) => {
+    if (!value.startsWith("Bearer ")) {
+      throw new Error(PATTERN_ERROR_MESSAGES["token"]);
+    }
+    const token = value.split(" ")[1];
+    if (!/^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/.test(token)) {
+      throw new Error(PATTERN_ERROR_MESSAGES["token"]);
+    }
+    return true;
+  });
 
 export const validateAuthorization: ValidationChain[] = [validateHeaderToken];
 
@@ -95,7 +103,7 @@ const validateBodyPostName: ValidationChain = body("name")
   .bail()
   .isLength({
     min: postSchema.MIN_LENGTH_NAME,
-    max: postSchema.MIN_LENGTH_NAME,
+    max: postSchema.MAX_LENGTH_NAME,
   })
   .withMessage(LENGTH_ERROR_MESSAGES["postName"]);
 
@@ -109,13 +117,18 @@ const validateBodyPostContent: ValidationChain = body("content")
   })
   .withMessage(LENGTH_ERROR_MESSAGES["postContent"]);
 
+export const validatePost: ValidationChain[] = [
+  validateBodyPostName,
+  validateBodyPostContent,
+];
+
 const validateBodyProductName: ValidationChain = body("name")
   .notEmpty()
   .withMessage(EMPTY_ERROR_MESSAGES["productName"])
   .bail()
   .isLength({
     min: productSchema.MIN_LENGTH_NAME,
-    max: productSchema.MIN_LENGTH_NAME,
+    max: productSchema.MAX_LENGTH_NAME,
   })
   .withMessage(LENGTH_ERROR_MESSAGES["productName"]);
 
@@ -168,6 +181,14 @@ const validateBodyTags: ValidationChain = body("tags")
     );
   })
   .withMessage(LENGTH_ERROR_MESSAGES["tag"]);
+
+export const validateProduct: ValidationChain[] = [
+  validateBodyProductName,
+  validateBodyProductDescription,
+  validateBodyPrice,
+  validateBodyImages,
+  validateBodyTags,
+];
 
 // const validateBody : ValidationChain = body("")
 // .notEmpty()

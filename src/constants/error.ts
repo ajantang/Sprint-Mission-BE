@@ -9,7 +9,7 @@ export const CUSTOM_ERROR_INFO: { [errCode: number]: string } = {
   40030: "이메일 또는 비밀번호가 일치하지 않습니다", // "일치하는 이메일이 없습니다"
   40031: "이메일 또는 비밀번호가 일치하지 않습니다", // "비밀번호가 일치하지 않습니다"
   40040: "허용되지 않는 범위의 값입니다",
-  40041: `price는 ${postSchema.MIN_VALUE_PRICE} 이상 ${postSchema.MAX_VALUE_PRICE} 이하로 입력해주세요`,
+  40041: `price는 ${productSchema.MIN_VALUE_PRICE} 이상 ${productSchema.MAX_VALUE_PRICE} 이하로 입력해주세요`,
   40042: `images는 ${MIN_NUMBER_IMAGES}에서 ${MAX_NUMBER_IMAGES}개의 요소를 가져야 합니다`,
   40043: `tags는 ${MIN_NUMBER_TAGS}에서 ${MAX_NUMBER_TAGS}개의 요소를 가져야 합니다`,
   40049: "유효하지 않은 토큰입니다",

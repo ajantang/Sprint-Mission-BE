@@ -39,7 +39,7 @@ export function checkToken(
   }
 
   if (userId instanceof CustomError) {
-    res.locals.userId = "";
+    res.locals.userId = null;
     next();
     return;
   }
