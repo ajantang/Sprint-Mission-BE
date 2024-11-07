@@ -11,7 +11,7 @@ import {
 async function createData({
   data,
   select,
-}: ProductCreateDataParam): Promise<Product | null> {
+}: ProductCreateDataParam): Promise<Product> {
   return await prisma.product.create({ data, select });
 }
 
@@ -46,7 +46,7 @@ async function updateData({
   where,
   data,
   select,
-}: ProductUpdateDataParam): Promise<Product | null> {
+}: ProductUpdateDataParam): Promise<Product> {
   return await prisma.product.update({ where, data, select });
 }
 

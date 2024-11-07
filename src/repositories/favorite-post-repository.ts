@@ -6,7 +6,7 @@ import { FavoritePostCreateDataParam } from "../types/favorite-post-types";
 async function createData({
   data,
   select,
-}: FavoritePostCreateDataParam): Promise<FavoritePost | null> {
+}: FavoritePostCreateDataParam): Promise<FavoritePost> {
   return await prisma.favoritePost.create({ data, select });
 }
 

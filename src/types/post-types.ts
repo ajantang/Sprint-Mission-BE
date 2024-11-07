@@ -1,5 +1,10 @@
 import { Prisma } from "@prisma/client";
 
+import {
+  postSelect,
+  postDetailSelect,
+} from "../services/selectors/post-select";
+
 interface BasePostParam {
   name: string;
   content: string;
@@ -63,3 +68,31 @@ export interface PostUpdateDataParam
   extends PostWhereUniqueInput,
     PostUpdateInput,
     PostSelect {}
+
+// interface BasePostInclude {
+//   PostImage: true;
+//   FavoritePost: true;
+//   User: true;
+// }
+
+// export type PostData = Prisma.PostGetPayload<{
+//   include: BasePostInclude;
+// }>;
+
+// export type PostDetailData = Prisma.PostGetPayload<{
+//   include: BasePostInclude & {
+//     PostComment: true;
+//   };
+// }>;
+
+export type PostData = Partial<
+  Prisma.PostGetPayload<{
+    select: typeof postSelect;
+  }>
+>;
+
+export type PostDetailData = Partial<
+  Prisma.PostGetPayload<{
+    select: ReturnType<typeof postDetailSelect>;
+  }>
+>;

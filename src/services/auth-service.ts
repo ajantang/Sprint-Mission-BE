@@ -27,7 +27,7 @@ async function signUp({
   password,
   nickname,
   name,
-}: userSignUpData): Promise<User | null> {
+}: userSignUpData): Promise<User> {
   const encryptedPassword: string = await hashPassword(password);
 
   return prisma.$transaction(async () => {

@@ -6,7 +6,7 @@ import { FavoriteProductCreateDataParam } from "../types/favorite-product-types"
 async function createData({
   data,
   select,
-}: FavoriteProductCreateDataParam): Promise<FavoriteProduct | null> {
+}: FavoriteProductCreateDataParam): Promise<FavoriteProduct> {
   return await prisma.favoriteProduct.create({ data, select });
 }
 

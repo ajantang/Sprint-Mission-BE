@@ -9,7 +9,7 @@ import {
 async function createData({
   data,
   select,
-}: userCreateDataParam): Promise<User | null> {
+}: userCreateDataParam): Promise<User> {
   return await prisma.user.create({ data, select });
 }
 

@@ -10,18 +10,19 @@ import {
   PostFavoriteParam,
 } from "../types/post-types";
 import {
-  PostSelect,
+  postSelect,
   postFavoriteSelect,
   postDetailSelect,
 } from "./selectors/post-select";
+import {
+  postMapper,
+  postDetailMapper,
+  postListMapper,
+} from "./mappers/post-mapper";
 
 import { ORDER_BY, DEFAULT_ORDER_BY } from "../constants/sort";
 
-async function createPost({
-  userId,
-  name,
-  content,
-}: CreatePostParam): Promise<Post | null> {
+async function createPost({ userId, name, content }: CreatePostParam) {
   const data = {
     User: {
       connect: { id: userId },
@@ -29,8 +30,12 @@ async function createPost({
     name,
     content,
   };
+  const result = await postRepository.createData({
+    data,
+    select: postFavoriteSelect(userId),
+  });
 
-  return await postRepository.createData({ data, select: PostSelect });
+  return postMapper(result);
 }
 
 async function getPostList({
@@ -39,7 +44,7 @@ async function getPostList({
   skip,
   take,
   keyword,
-}: GetPostListParam): Promise<Post[]> {
+}: GetPostListParam) {
   const postOrderBy = { createdAt: ORDER_BY[orderBy] || DEFAULT_ORDER_BY };
   const where = {
     ...(keyword && {
@@ -56,7 +61,7 @@ async function getPostList({
   });
 }
 
-async function getPost({ userId, postId }: PostFavoriteParam): Promise<Post> {
+async function getPost({ userId, postId }: PostFavoriteParam) {
   const where = {
     id: postId,
   };
@@ -67,12 +72,7 @@ async function getPost({ userId, postId }: PostFavoriteParam): Promise<Post> {
   });
 }
 
-async function modifyPost({
-  userId,
-  postId,
-  name,
-  content,
-}: ModifyPostParam): Promise<Post | null> {
+async function modifyPost({ userId, postId, name, content }: ModifyPostParam) {
   const where = {
     id: postId,
   };
@@ -91,10 +91,7 @@ async function deletePost(postId: string): Promise<void> {
   return await postRepository.deleteData(where);
 }
 
-async function increasePostFavorite({
-  userId,
-  postId,
-}: PostFavoriteParam): Promise<Post | null> {
+async function increasePostFavorite({ userId, postId }: PostFavoriteParam) {
   const postWhere = { id: postId };
   const postData = { favoriteCount: { increment: 1 } };
   const favoritePostData = {
@@ -119,10 +116,7 @@ async function increasePostFavorite({
   return result;
 }
 
-async function decreasePostFavorite({
-  userId,
-  postId,
-}: PostFavoriteParam): Promise<Post | null> {
+async function decreasePostFavorite({ userId, postId }: PostFavoriteParam) {
   const postWhere = { id: postId };
   const postData = { favoriteCount: { decrement: 1 } };
   const favoritePostWhere = {

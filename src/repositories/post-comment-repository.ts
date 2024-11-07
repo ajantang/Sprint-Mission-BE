@@ -11,7 +11,7 @@ import {
 async function createData({
   data,
   select,
-}: PostCommentCreateDataParam): Promise<PostComment | null> {
+}: PostCommentCreateDataParam): Promise<PostComment> {
   return await prisma.postComment.create({ data, select });
 }
 
@@ -46,7 +46,7 @@ async function updateData({
   where,
   data,
   select,
-}: PostCommentUpdateDataParam): Promise<PostComment | null> {
+}: PostCommentUpdateDataParam): Promise<PostComment> {
   return await prisma.postComment.update({ where, data, select });
 }
 
