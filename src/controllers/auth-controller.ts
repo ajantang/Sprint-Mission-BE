@@ -43,11 +43,11 @@ async function signIn(
     });
 
     if (authInfo === null) {
-      throw new CustomError(40050);
+      throw new CustomError(40030);
     }
 
     if (authInfo === false) {
-      throw new CustomError(40051);
+      throw new CustomError(40031);
     }
 
     res.status(200).send(authInfo);

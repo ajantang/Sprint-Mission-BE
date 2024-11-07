@@ -18,10 +18,12 @@ export function validateToken(
 
   if (userId instanceof CustomError) {
     next(userId);
+    return;
   }
 
   res.locals.userId = userId;
   next();
+  return;
 }
 
 export function checkToken(
@@ -29,5 +31,20 @@ export function checkToken(
   res: Response,
   next: NextFunction
 ): void {
+  const accessToken = req.headers.authorization?.split(" ")[1];
+  let userId: string | JwtPayload | CustomError = "";
+
+  if (typeof accessToken === "string") {
+    userId = validateAccessToken(accessToken);
+  }
+
+  if (userId instanceof CustomError) {
+    res.locals.userId = "";
+    next();
+    return;
+  }
+
+  res.locals.userId = userId;
   next();
+  return;
 }

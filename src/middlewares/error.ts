@@ -16,7 +16,7 @@ export function logErrors(
   next(err);
 }
 
-export function ValidationHandler(
+export function validationHandler(
   req: Request,
   res: Response,
   next: NextFunction

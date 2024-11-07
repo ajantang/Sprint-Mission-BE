@@ -2,23 +2,37 @@ import express, { Router, Request, Response } from "express";
 
 import { validateAuthorization } from "../middlewares/validator";
 import { validateToken, checkToken } from "../middlewares/token";
+import postController from "../controllers/post-controller";
 
 const postRouter: Router = express.Router();
 
 postRouter
-  .post(
-    "/",
+  .post("/", validateAuthorization, validateToken, postController.createPost)
+  .get("/", checkToken, postController.getPostList)
+  .get("/:postId", validateAuthorization, validateToken, postController.getPost)
+  .patch(
+    "/:postId",
     validateAuthorization,
     validateToken,
-    (req: Request, res: Response) => {
-      res.status(201).send({ message: res.locals.userId });
-    }
+    postController.modifyPost
   )
-  .get("/", checkToken)
-  .get("/:postId", validateAuthorization, validateToken)
-  .patch("/:postId", validateAuthorization, validateToken)
-  .delete("/:postId", validateAuthorization, validateToken)
-  .patch("/:postId/favorite", validateAuthorization, validateToken)
-  .delete("/:postId/favorite", validateAuthorization, validateToken);
+  .delete(
+    "/:postId",
+    validateAuthorization,
+    validateToken,
+    postController.deletePost
+  )
+  .patch(
+    "/:postId/favorite",
+    validateAuthorization,
+    validateToken,
+    postController.increasePostFavorite
+  )
+  .delete(
+    "/:postId/favorite",
+    validateAuthorization,
+    validateToken,
+    postController.decreasePostFavorite
+  );
 
 export default postRouter;

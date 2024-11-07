@@ -46,12 +46,11 @@ export function validateAccessToken(
     const decoded = jwt.verify(token, ACCESS_TOKEN_SECRET) as JwtPayload;
 
     if (typeof decoded.id === "string") {
-      console.log("decoded.id === string : ", decoded.id);
       return decoded.id;
     }
-    console.log("decoded.id !== string : ", decoded);
-    return new CustomError(40069);
+
+    return new CustomError(40049);
   } catch (err) {
-    return new CustomError(40069);
+    return new CustomError(40049);
   }
 }

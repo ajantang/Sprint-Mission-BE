@@ -1,8 +1,17 @@
 import { header, query, body, ValidationChain } from "express-validator";
 
 import { userSchema } from "../constants/user";
+import { postSchema } from "../constants/post";
+import { productSchema } from "../constants/product";
+import {
+  imageSchema,
+  MIN_NUMBER_IMAGES,
+  MAX_NUMBER_IMAGES,
+} from "../constants/image";
+import { tagSchema, MIN_NUMBER_TAGS, MAX_NUMBER_TAGS } from "../constants/tag";
 import {
   CUSTOM_ERROR_INFO,
+  RANGE_ERROR_MESSAGES,
   EMPTY_ERROR_MESSAGES,
   LENGTH_ERROR_MESSAGES,
   PATTERN_ERROR_MESSAGES,
@@ -79,3 +88,93 @@ const validateHeaderToken: ValidationChain = header("authorization")
   .withMessage(PATTERN_ERROR_MESSAGES["token"]);
 
 export const validateAuthorization: ValidationChain[] = [validateHeaderToken];
+
+const validateBodyPostName: ValidationChain = body("name")
+  .notEmpty()
+  .withMessage(EMPTY_ERROR_MESSAGES["postName"])
+  .bail()
+  .isLength({
+    min: postSchema.MIN_LENGTH_NAME,
+    max: postSchema.MIN_LENGTH_NAME,
+  })
+  .withMessage(LENGTH_ERROR_MESSAGES["postName"]);
+
+const validateBodyPostContent: ValidationChain = body("content")
+  .notEmpty()
+  .withMessage(EMPTY_ERROR_MESSAGES["postContent"])
+  .bail()
+  .isLength({
+    min: postSchema.MIN_LENGTH_CONTENT,
+    max: postSchema.MAX_LENGTH_CONTENT,
+  })
+  .withMessage(LENGTH_ERROR_MESSAGES["postContent"]);
+
+const validateBodyProductName: ValidationChain = body("name")
+  .notEmpty()
+  .withMessage(EMPTY_ERROR_MESSAGES["productName"])
+  .bail()
+  .isLength({
+    min: productSchema.MIN_LENGTH_NAME,
+    max: productSchema.MIN_LENGTH_NAME,
+  })
+  .withMessage(LENGTH_ERROR_MESSAGES["productName"]);
+
+const validateBodyProductDescription: ValidationChain = body("description")
+  .notEmpty()
+  .withMessage(EMPTY_ERROR_MESSAGES["productDescription"])
+  .bail()
+  .isLength({
+    min: productSchema.MIN_LENGTH_DESCRIPTION,
+    max: productSchema.MAX_LENGTH_DESCRIPTION,
+  })
+  .withMessage(LENGTH_ERROR_MESSAGES["productDescription"]);
+
+const validateBodyPrice: ValidationChain = body("price")
+  .notEmpty()
+  .withMessage(EMPTY_ERROR_MESSAGES["price"])
+  .bail()
+  .isInt({
+    min: productSchema.MIN_VALUE_PRICE,
+    max: productSchema.MAX_VALUE_PRICE,
+  })
+  .withMessage(RANGE_ERROR_MESSAGES["price"]);
+
+const validateBodyImages: ValidationChain = body("images")
+  .optional()
+  .isArray({ min: MIN_NUMBER_IMAGES, max: MAX_NUMBER_IMAGES })
+  .withMessage(RANGE_ERROR_MESSAGES["images"])
+  .bail()
+  .custom((array) => {
+    return array.every(
+      (value: string) =>
+        typeof value === "string" &&
+        imageSchema.MIN_LENGTH_IMAGE <= value.length &&
+        value.length <= imageSchema.MAX_LENGTH_IMAGE
+    );
+  })
+  .withMessage(LENGTH_ERROR_MESSAGES["image"]);
+
+const validateBodyTags: ValidationChain = body("tags")
+  .optional()
+  .isArray({ min: MIN_NUMBER_TAGS, max: MAX_NUMBER_TAGS })
+  .withMessage(RANGE_ERROR_MESSAGES["tags"])
+  .bail()
+  .custom((array) => {
+    return array.every(
+      (value: string) =>
+        typeof value === "string" &&
+        tagSchema.MIN_LENGTH_TAG <= value.length &&
+        value.length <= tagSchema.MAX_LENGTH_TAG
+    );
+  })
+  .withMessage(LENGTH_ERROR_MESSAGES["tag"]);
+
+// const validateBody : ValidationChain = body("")
+// .notEmpty()
+// .withMessage(EMPTY_ERROR_MESSAGES[""])
+// .bail()
+// .isLength({
+//   min: ,
+//   max: ,
+// })
+// .withMessage(LENGTH_ERROR_MESSAGES[""]);
