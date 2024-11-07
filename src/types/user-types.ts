@@ -42,7 +42,7 @@ interface userWhereUniqueInpu {
   where: Prisma.UserWhereUniqueInput;
 }
 
-export interface userCreateDataParams extends userCreateInput, userSelect {}
-export interface userFindUniqueOrThrowDataParams
+export interface userCreateDataParam extends userCreateInput, userSelect {}
+export interface userFindUniqueOrThrowDataParam
   extends userWhereUniqueInpu,
     userSelect {}

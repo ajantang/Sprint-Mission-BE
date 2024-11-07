@@ -33,7 +33,13 @@ async function findManyByPaginationData({
   where,
   select,
 }: postFindManyByPaginationParam): Promise<Post[]> {
-  return await prisma.post.findMany({ orderBy, skip, take, where, select });
+  return await prisma.post.findMany({
+    orderBy,
+    skip,
+    take,
+    where,
+    select,
+  });
 }
 
 async function updateData({

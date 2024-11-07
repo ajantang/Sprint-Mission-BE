@@ -1,5 +1,29 @@
 import { Prisma } from "@prisma/client";
 
+export interface createPostParam {
+  userId: string;
+  name: string;
+  content: string;
+}
+
+export interface getPostListParam {
+  orderBy: string;
+  skip: number;
+  take: number;
+  keyword: string;
+}
+
+export interface modifyPostParam {
+  postId: string;
+  name: string;
+  content: string;
+}
+
+export interface postFavoriteParam {
+  userId: string;
+  postId: string;
+}
+
 interface postCreateInput {
   data: Prisma.PostCreateInput;
 }
@@ -16,9 +40,7 @@ interface postWhereInput {
   where: Prisma.PostWhereInput;
 }
 interface postPagenationInput {
-  orderBy:
-    | Prisma.PostOrderByWithRelationInput
-    | Prisma.PostOrderByWithRelationInput[];
+  orderBy: { [id: string]: string };
   skip: number;
   take: number;
 }

@@ -4,7 +4,7 @@ import { SHOW_DEFAULT_COMMENT_COUNT } from "../../constants/post";
 
 export const postSelect: Prisma.PostSelect = {
   id: true,
-  title: true,
+  name: true,
   content: true,
   favoriteCount: true,
   createdAt: true,
