@@ -135,12 +135,12 @@ model FavoritePost {
     id        String   @id @default(uuid()) @db.VarChar(36)
     User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId    String   @map("user_id")
-    Post      Post     @relation(fields: [PostId], references: [id], onDelete: Cascade)
-    PostId    String   @map("post_id")
+    Post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+    postId    String   @map("post_id")
     createdAt DateTime @default(now()) @map("created_at")
     updatedAt DateTime @updatedAt @map("updated_at")
 
-    @@unique([userId, PostId])
+    @@unique([userId, postId])
     @@map("favorite_post")
 }
 
@@ -148,8 +148,8 @@ model PostComment {
     id        String   @id @default(uuid()) @db.VarChar(36)
     User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId    String   @map("user_id")
-    Post      Post     @relation(fields: [PostId], references: [id], onDelete: Cascade)
-    PostId    String   @map("post_id")
+    Post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+    postId    String   @map("post_id")
     content   String   @db.VarChar(200)
     createdAt DateTime @default(now()) @map("created_at")
     updatedAt DateTime @updatedAt @map("updated_at")

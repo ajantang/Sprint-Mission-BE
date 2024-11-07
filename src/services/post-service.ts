@@ -2,12 +2,18 @@ import { Post } from "@prisma/client";
 
 import prisma from "../repositories/prisma";
 import postRepository from "../repositories/post-repository";
+import favoritePostRepository from "../repositories/favorite-post-repository";
 import {
   CreatePostParam,
   GetPostListParam,
   ModifyPostParam,
   PostFavoriteParam,
 } from "../types/post-types";
+import {
+  PostSelect,
+  postFavoriteSelect,
+  postDetailSelect,
+} from "./selectors/post-select";
 
 import { ORDER_BY, DEFAULT_ORDER_BY } from "../constants/sort";
 
@@ -23,12 +29,12 @@ async function createPost({
     name,
     content,
   };
-  const select = {};
 
-  return await postRepository.createData({ data, select });
+  return await postRepository.createData({ data, select: PostSelect });
 }
 
 async function getPostList({
+  userId,
   orderBy,
   skip,
   take,
@@ -40,27 +46,29 @@ async function getPostList({
       OR: [{ name: { contains: keyword } }, { content: { contains: keyword } }],
     }),
   };
-  const select = {};
 
   return await postRepository.findManyByPaginationData({
     orderBy: postOrderBy,
     skip,
     take,
     where,
-    select,
+    select: postFavoriteSelect(userId),
   });
 }
 
-async function getPost(postId: string): Promise<Post> {
+async function getPost({ userId, postId }: PostFavoriteParam): Promise<Post> {
   const where = {
     id: postId,
   };
-  const select = {};
 
-  return await postRepository.findUniqueOrThrowData({ where, select });
+  return await postRepository.findUniqueOrThrowData({
+    where,
+    select: postDetailSelect(userId),
+  });
 }
 
 async function modifyPost({
+  userId,
   postId,
   name,
   content,
@@ -69,9 +77,12 @@ async function modifyPost({
     id: postId,
   };
   const data = { ...(name && { name }), ...(content && { content }) };
-  const select = {};
 
-  return await postRepository.updateData({ where, data, select });
+  return await postRepository.updateData({
+    where,
+    data,
+    select: postDetailSelect(userId),
+  });
 }
 
 async function deletePost(postId: string): Promise<void> {
@@ -86,12 +97,22 @@ async function increasePostFavorite({
 }: PostFavoriteParam): Promise<Post | null> {
   const postWhere = { id: postId };
   const postData = { favoriteCount: { increment: 1 } };
-  const select = {};
+  const favoritePostData = {
+    User: {
+      connect: { id: userId },
+    },
+    Post: {
+      connect: { id: postId },
+    },
+  };
+
   const result = prisma.$transaction(async () => {
+    favoritePostRepository.createData({ data: favoritePostData });
+
     return await postRepository.updateData({
       where: postWhere,
       data: postData,
-      select,
+      select: postFavoriteSelect(userId),
     });
   });
 
@@ -101,17 +122,27 @@ async function increasePostFavorite({
 async function decreasePostFavorite({
   userId,
   postId,
-}: PostFavoriteParam): Promise<void> {
+}: PostFavoriteParam): Promise<Post | null> {
   const postWhere = { id: postId };
   const postData = { favoriteCount: { decrement: 1 } };
-  const select = {};
+  const favoritePostWhere = {
+    userId_postId: {
+      userId,
+      postId,
+    },
+  };
+
   const result = prisma.$transaction(async () => {
+    favoritePostRepository.deleteData(favoritePostWhere);
+
     return await postRepository.updateData({
       where: postWhere,
       data: postData,
-      select,
+      select: postFavoriteSelect(userId),
     });
   });
+
+  return result;
 }
 
 export default {

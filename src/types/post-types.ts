@@ -9,16 +9,18 @@ export interface CreatePostParam extends BasePostParam {
   userId: string;
 }
 
-export interface GetPostListParam {
+export interface GetListParam {
   orderBy: string;
   skip: number;
   take: number;
   keyword: string;
 }
 
-export interface ModifyPostParam extends BasePostParam {
-  postId: string;
+export interface GetPostListParam extends GetListParam {
+  userId: string;
 }
+
+export interface ModifyPostParam extends BasePostParam, PostFavoriteParam {}
 
 export interface PostFavoriteParam {
   userId: string;
