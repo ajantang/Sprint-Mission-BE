@@ -12,17 +12,17 @@ async function createData({
   return await prisma.user.create({ data, select });
 }
 
-async function findFirstOrThrowData({
+async function findUniqueOrThrowData({
   where,
   select,
 }: {
-  where: Prisma.UserWhereInput;
+  where: Prisma.UserWhereUniqueInput;
   select?: Prisma.UserSelect;
 }): Promise<User | null> {
-  return await prisma.user.findFirstOrThrow({ where, select });
+  return await prisma.user.findUniqueOrThrow({ where, select });
 }
 
 export default {
   createData,
-  findFirstOrThrowData,
+  findUniqueOrThrowData,
 };
