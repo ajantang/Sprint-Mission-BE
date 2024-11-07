@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client";
 
 import { SHOW_DEFAULT_COMMENT_COUNT } from "../../constants/post";
 
-export const postSelect: Prisma.PostSelect = {
+export const PostSelect: Prisma.PostSelect = {
   id: true,
   name: true,
   content: true,
@@ -23,7 +23,7 @@ export const postSelect: Prisma.PostSelect = {
 };
 
 export const postFavoriteSelect = (myUserId: string): Prisma.PostSelect => ({
-  ...postSelect,
+  ...PostSelect,
   FavoritePost: {
     where: {
       userId: myUserId,

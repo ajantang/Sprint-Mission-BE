@@ -3,10 +3,10 @@ import { Post } from "@prisma/client";
 import prisma from "../repositories/prisma";
 import postRepository from "../repositories/post-repository";
 import {
-  createPostParam,
-  getPostListParam,
-  modifyPostParam,
-  postFavoriteParam,
+  CreatePostParam,
+  GetPostListParam,
+  ModifyPostParam,
+  PostFavoriteParam,
 } from "../types/post-types";
 
 import { ORDER_BY, DEFAULT_ORDER_BY } from "../constants/sort";
@@ -15,7 +15,7 @@ async function createPost({
   userId,
   name,
   content,
-}: createPostParam): Promise<Post | null> {
+}: CreatePostParam): Promise<Post | null> {
   const data = {
     User: {
       connect: { id: userId },
@@ -33,7 +33,7 @@ async function getPostList({
   skip,
   take,
   keyword,
-}: getPostListParam): Promise<Post[]> {
+}: GetPostListParam): Promise<Post[]> {
   const postOrderBy = { createdAt: ORDER_BY[orderBy] || DEFAULT_ORDER_BY };
   const where = {
     ...(keyword && {
@@ -64,7 +64,7 @@ async function modifyPost({
   postId,
   name,
   content,
-}: modifyPostParam): Promise<Post | null> {
+}: ModifyPostParam): Promise<Post | null> {
   const where = {
     id: postId,
   };
@@ -83,7 +83,7 @@ async function deletePost(postId: string): Promise<void> {
 async function increasePostFavorite({
   userId,
   postId,
-}: postFavoriteParam): Promise<Post | null> {
+}: PostFavoriteParam): Promise<Post | null> {
   const postWhere = { id: postId };
   const postData = { favoriteCount: { increment: 1 } };
   const select = {};
@@ -101,7 +101,7 @@ async function increasePostFavorite({
 async function decreasePostFavorite({
   userId,
   postId,
-}: postFavoriteParam): Promise<void> {
+}: PostFavoriteParam): Promise<void> {
   const postWhere = { id: postId };
   const postData = { favoriteCount: { decrement: 1 } };
   const select = {};

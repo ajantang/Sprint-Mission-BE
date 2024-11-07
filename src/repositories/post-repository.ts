@@ -2,23 +2,23 @@ import { Prisma, Post } from "@prisma/client";
 
 import prisma from "./prisma";
 import {
-  postCreateDataParam,
-  postFindUniqueOrThrowDataParam,
-  postFindManyByPaginationParam,
-  postUpdateDataParam,
+  PostCreateDataParam,
+  PostFindUniqueOrThrowDataParam,
+  PostFindManyByPaginationParam,
+  PostUpdateDataParam,
 } from "../types/post-types";
 
 async function createData({
   data,
   select,
-}: postCreateDataParam): Promise<Post | null> {
+}: PostCreateDataParam): Promise<Post | null> {
   return await prisma.post.create({ data, select });
 }
 
 async function findUniqueOrThrowData({
   where,
   select,
-}: postFindUniqueOrThrowDataParam): Promise<Post> {
+}: PostFindUniqueOrThrowDataParam): Promise<Post> {
   return await prisma.post.findUniqueOrThrow({ where, select });
 }
 
@@ -32,7 +32,7 @@ async function findManyByPaginationData({
   take,
   where,
   select,
-}: postFindManyByPaginationParam): Promise<Post[]> {
+}: PostFindManyByPaginationParam): Promise<Post[]> {
   return await prisma.post.findMany({
     orderBy,
     skip,
@@ -46,7 +46,7 @@ async function updateData({
   where,
   data,
   select,
-}: postUpdateDataParam): Promise<Post | null> {
+}: PostUpdateDataParam): Promise<Post | null> {
   return await prisma.post.update({ where, data, select });
 }
 

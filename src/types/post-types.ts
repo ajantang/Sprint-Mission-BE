@@ -1,62 +1,63 @@
 import { Prisma } from "@prisma/client";
 
-export interface createPostParam {
-  userId: string;
+interface BasePostParam {
   name: string;
   content: string;
 }
 
-export interface getPostListParam {
+export interface CreatePostParam extends BasePostParam {
+  userId: string;
+}
+
+export interface GetPostListParam {
   orderBy: string;
   skip: number;
   take: number;
   keyword: string;
 }
 
-export interface modifyPostParam {
+export interface ModifyPostParam extends BasePostParam {
   postId: string;
-  name: string;
-  content: string;
 }
 
-export interface postFavoriteParam {
+export interface PostFavoriteParam {
   userId: string;
   postId: string;
 }
 
-interface postCreateInput {
+interface PostCreateInput {
   data: Prisma.PostCreateInput;
 }
-interface postUpdateInput {
+interface PostUpdateInput {
   data: Prisma.PostUpdateInput;
 }
-interface postSelect {
+interface PostSelect {
   select?: Prisma.PostSelect;
 }
-interface postWhereUniqueInput {
+interface PostWhereUniqueInput {
   where: Prisma.PostWhereUniqueInput;
 }
-interface postWhereInput {
+interface PostWhereInput {
   where: Prisma.PostWhereInput;
 }
-interface postPagenationInput {
+interface PostPagenationInput {
   orderBy: { [id: string]: string };
   skip: number;
   take: number;
 }
 
-export interface postCreateDataParam extends postCreateInput, postSelect {}
+export interface PostCreateDataParam extends PostCreateInput, PostSelect {}
 
-export interface postFindUniqueOrThrowDataParam
-  extends postWhereUniqueInput,
-    postSelect {}
+export interface PostFindUniqueOrThrowDataParam
+  extends PostWhereUniqueInput,
+    PostSelect {}
 
-export interface postFindManyByPaginationParam
-  extends postPagenationInput,
-    postWhereInput,
-    postSelect {}
+export interface PostFindManyByPaginationParam
+  extends PostPagenationInput,
+    PostWhereInput,
+    PostSelect {}
 
-export interface postUpdateDataParam
-  extends postWhereUniqueInput,
-    postUpdateInput,
-    postSelect {}
+export interface PostUpdateDataParam
+  extends PostWhereUniqueInput,
+    PostUpdateInput,
+    PostSelect {}
