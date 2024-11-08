@@ -1,6 +1,6 @@
 import { PostData, PostDetailData } from "../../types/post-types";
 
-export function postMapper(data: PostData) {
+export function postMapper(data: PostData | PostDetailData) {
   return {
     id: data.id,
     name: data.name,
@@ -18,7 +18,17 @@ export function postMapper(data: PostData) {
 export function postDetailMapper(data: PostDetailData) {
   return {
     ...postMapper(data),
-    comments: data.PostComment,
+    comments:
+      data.PostComment?.map((comment) => ({
+        id: comment.id,
+        content: comment.content,
+        createdAt: comment.createdAt,
+        User: {
+          id: comment.User.id,
+          nickname: comment.User.nickname,
+          image: comment.User.image || null,
+        },
+      })) || [],
   };
 }
 

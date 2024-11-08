@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 
-import { SHOW_DEFAULT_COMMENT_COUNT } from "../../constants/post";
+import { DEFAULT_COMMENT_TAKE } from "../../constants/post";
 
 export const postSelect: Prisma.PostSelect = {
   id: true,
@@ -39,7 +39,7 @@ export const postDetailSelect = (myUserId: string): Prisma.PostSelect => ({
   PostComment: {
     orderBy: { createdAt: "asc" },
     skip: 0,
-    take: SHOW_DEFAULT_COMMENT_COUNT,
+    take: DEFAULT_COMMENT_TAKE,
     select: {
       id: true,
       content: true,

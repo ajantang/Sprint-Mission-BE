@@ -1,7 +1,12 @@
 import express, { Router } from "express";
 
 import { validationHandler } from "../middlewares/error";
-import { validateAuthorization, validatePost } from "../middlewares/validator";
+import {
+  validateAuthorization,
+  validateCreatePost,
+  validateUpdatePost,
+} from "../middlewares/validator";
+import { isAuthorizedPostIdParam } from "../middlewares/post";
 import { validateToken, checkToken } from "../middlewares/token";
 import postController from "../controllers/post-controller";
 
@@ -11,7 +16,7 @@ postRouter
   .post(
     "/",
     validateAuthorization,
-    validatePost,
+    validateCreatePost,
     validationHandler,
     validateToken,
     postController.createPost
@@ -27,9 +32,10 @@ postRouter
   .patch(
     "/:postId",
     validateAuthorization,
-    validatePost,
+    validateUpdatePost,
     validationHandler,
     validateToken,
+    isAuthorizedPostIdParam,
     postController.modifyPost
   )
   .delete(
@@ -37,6 +43,7 @@ postRouter
     validateAuthorization,
     validationHandler,
     validateToken,
+    isAuthorizedPostIdParam,
     postController.deletePost
   )
   .patch(
@@ -44,6 +51,7 @@ postRouter
     validateAuthorization,
     validationHandler,
     validateToken,
+    isAuthorizedPostIdParam,
     postController.increasePostFavorite
   )
   .delete(

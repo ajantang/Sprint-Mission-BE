@@ -10,4 +10,5 @@ export const postSchema = {
   MAX_LENGTH_CONTENT,
 };
 
-export const SHOW_DEFAULT_COMMENT_COUNT = 100;
+export const DEFAULT_POST_TAKE = 10;
+export const DEFAULT_COMMENT_TAKE = 100;

@@ -8,6 +8,10 @@ import {
   GetPostListParam,
   ModifyPostParam,
   PostFavoriteParam,
+  PostBaseInfo,
+  PostDetailInfo,
+  PostListInfo,
+  PostDetailData,
 } from "../types/post-types";
 import {
   postSelect,
@@ -21,8 +25,13 @@ import {
 } from "./mappers/post-mapper";
 
 import { ORDER_BY, DEFAULT_ORDER_BY } from "../constants/sort";
+import { DEFAULT_POST_TAKE } from "../constants/post";
 
-async function createPost({ userId, name, content }: CreatePostParam) {
+async function createPost({
+  userId,
+  name,
+  content,
+}: CreatePostParam): Promise<PostBaseInfo> {
   const data = {
     User: {
       connect: { id: userId },
@@ -35,54 +44,76 @@ async function createPost({ userId, name, content }: CreatePostParam) {
     select: postFavoriteSelect(userId),
   });
 
+  console.log("createPost : ", result);
+
   return postMapper(result);
 }
 
 async function getPostList({
   userId,
   orderBy,
-  skip,
-  take,
+  page,
+  pageSize,
   keyword,
-}: GetPostListParam) {
+}: GetPostListParam): Promise<PostListInfo> {
   const postOrderBy = { createdAt: ORDER_BY[orderBy] || DEFAULT_ORDER_BY };
   const where = {
     ...(keyword && {
       OR: [{ name: { contains: keyword } }, { content: { contains: keyword } }],
     }),
   };
+  const iPage: number = parseInt(page as unknown as string) || 1;
+  const iPageSize: number =
+    parseInt(pageSize as unknown as string) || DEFAULT_POST_TAKE;
+  const skip: number = (iPage - 1) * iPageSize;
+  const take: number = iPageSize;
+  const count: number = await postRepository.countData(where);
+  const postList: Partial<Post>[] =
+    await postRepository.findManyByPaginationData({
+      orderBy: postOrderBy,
+      skip,
+      take,
+      where,
+      select: postFavoriteSelect(userId),
+    });
 
-  return await postRepository.findManyByPaginationData({
-    orderBy: postOrderBy,
-    skip,
-    take,
-    where,
-    select: postFavoriteSelect(userId),
-  });
+  return postListMapper({ count, postList });
 }
 
-async function getPost({ userId, postId }: PostFavoriteParam) {
+async function getPost({
+  userId,
+  postId,
+}: PostFavoriteParam): Promise<PostDetailInfo> {
   const where = {
     id: postId,
   };
 
-  return await postRepository.findUniqueOrThrowData({
+  const result: Partial<Post> = await postRepository.findUniqueOrThrowData({
     where,
     select: postDetailSelect(userId),
   });
+
+  return postDetailMapper(result as PostDetailData);
 }
 
-async function modifyPost({ userId, postId, name, content }: ModifyPostParam) {
+async function modifyPost({
+  userId,
+  postId,
+  name,
+  content,
+}: ModifyPostParam): Promise<PostBaseInfo> {
   const where = {
     id: postId,
   };
   const data = { ...(name && { name }), ...(content && { content }) };
 
-  return await postRepository.updateData({
+  const result = await postRepository.updateData({
     where,
     data,
-    select: postDetailSelect(userId),
+    select: postFavoriteSelect(userId),
   });
+
+  return postMapper(result);
 }
 
 async function deletePost(postId: string): Promise<void> {
@@ -103,7 +134,7 @@ async function increasePostFavorite({ userId, postId }: PostFavoriteParam) {
     },
   };
 
-  const result = prisma.$transaction(async () => {
+  const result: Partial<Post> = await prisma.$transaction(async () => {
     favoritePostRepository.createData({ data: favoritePostData });
 
     return await postRepository.updateData({
@@ -113,7 +144,7 @@ async function increasePostFavorite({ userId, postId }: PostFavoriteParam) {
     });
   });
 
-  return result;
+  return postMapper(result);
 }
 
 async function decreasePostFavorite({ userId, postId }: PostFavoriteParam) {
@@ -126,7 +157,7 @@ async function decreasePostFavorite({ userId, postId }: PostFavoriteParam) {
     },
   };
 
-  const result = prisma.$transaction(async () => {
+  const result: Partial<Post> = await prisma.$transaction(async () => {
     favoritePostRepository.deleteData(favoritePostWhere);
 
     return await postRepository.updateData({
@@ -136,7 +167,7 @@ async function decreasePostFavorite({ userId, postId }: PostFavoriteParam) {
     });
   });
 
-  return result;
+  return postMapper(result);
 }
 
 export default {

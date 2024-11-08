@@ -4,6 +4,24 @@ import {
   postSelect,
   postDetailSelect,
 } from "../services/selectors/post-select";
+import { UserCommentInfo } from "./user-types";
+
+export interface PostCreateData {
+  name: string;
+  content: string;
+}
+
+export interface PostListQuery {
+  orderBy: string;
+  page: number;
+  pageSize: number;
+  keyword: string;
+}
+
+export interface PostUpdateData {
+  name: string;
+  content: string;
+}
 
 interface BasePostParam {
   name: string;
@@ -14,14 +32,7 @@ export interface CreatePostParam extends BasePostParam {
   userId: string;
 }
 
-export interface GetListParam {
-  orderBy: string;
-  skip: number;
-  take: number;
-  keyword: string;
-}
-
-export interface GetPostListParam extends GetListParam {
+export interface GetPostListParam extends PostListQuery {
   userId: string;
 }
 
@@ -69,30 +80,64 @@ export interface PostUpdateDataParam
     PostUpdateInput,
     PostSelect {}
 
-// interface BasePostInclude {
-//   PostImage: true;
-//   FavoritePost: true;
-//   User: true;
-// }
-
-// export type PostData = Prisma.PostGetPayload<{
-//   include: BasePostInclude;
-// }>;
-
-// export type PostDetailData = Prisma.PostGetPayload<{
-//   include: BasePostInclude & {
-//     PostComment: true;
-//   };
-// }>;
-
 export type PostData = Partial<
   Prisma.PostGetPayload<{
     select: typeof postSelect;
   }>
 >;
 
-export type PostDetailData = Partial<
-  Prisma.PostGetPayload<{
-    select: ReturnType<typeof postDetailSelect>;
-  }>
->;
+interface PostCommentData {
+  id: string;
+  content: string;
+  createdAt: Date;
+  User: UserCommentInfo;
+}
+
+export interface PostDetailData {
+  id: string;
+  name: string;
+  content: string;
+  favoriteCount: number;
+  createdAt: Date;
+  PostImage: { image: string }[];
+  User: {
+    id: string;
+    nickname: string;
+    image: string | null;
+  };
+  FavoritePost?: { id: string }[];
+  PostComment?: PostCommentData[];
+}
+
+export interface PostBaseInfo {
+  id: string | null | undefined;
+  name: string | null | undefined;
+  content: string | null | undefined;
+  favoriteCount: number | null | undefined;
+  images: string[] | null | undefined;
+  ownerId: string | null | undefined;
+  ownerImage: string | null | undefined;
+  ownerNickname: string | undefined;
+  isFavorite: boolean | undefined;
+  createdAt: Date | undefined;
+}
+
+export interface PostDetailInfo extends PostBaseInfo {
+  comments:
+    | Array<{
+        id: string;
+        content: string;
+        createdAt: Date;
+        User: {
+          id: string;
+          nickname: string;
+          image: string | null;
+        };
+      }>
+    | undefined;
+}
+
+export interface PostListInfo {
+  totalCount: number;
+  posts: PostBaseInfo[];
+}

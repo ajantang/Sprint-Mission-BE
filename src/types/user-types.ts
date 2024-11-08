@@ -32,6 +32,12 @@ export interface userIndetificationInfo extends userBaseInfo {
 
 export interface userTokenInfo extends userBaseInfo, tokens {}
 
+export interface UserCommentInfo {
+  id: string;
+  nickname: string;
+  image: string | null;
+}
+
 interface userCreateInput {
   data: Prisma.UserCreateInput;
 }

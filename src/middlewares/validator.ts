@@ -97,7 +97,7 @@ const validateHeaderToken: ValidationChain = header("authorization")
 
 export const validateAuthorization: ValidationChain[] = [validateHeaderToken];
 
-const validateBodyPostName: ValidationChain = body("name")
+const validateBodyCreatePostName: ValidationChain = body("name")
   .notEmpty()
   .withMessage(EMPTY_ERROR_MESSAGES["postName"])
   .bail()
@@ -107,7 +107,7 @@ const validateBodyPostName: ValidationChain = body("name")
   })
   .withMessage(LENGTH_ERROR_MESSAGES["postName"]);
 
-const validateBodyPostContent: ValidationChain = body("content")
+const validateBodyCreatePostContent: ValidationChain = body("content")
   .notEmpty()
   .withMessage(EMPTY_ERROR_MESSAGES["postContent"])
   .bail()
@@ -117,9 +117,36 @@ const validateBodyPostContent: ValidationChain = body("content")
   })
   .withMessage(LENGTH_ERROR_MESSAGES["postContent"]);
 
-export const validatePost: ValidationChain[] = [
-  validateBodyPostName,
-  validateBodyPostContent,
+const validateBodyUpdatePostName: ValidationChain = body("name")
+  .optional()
+  .notEmpty()
+  .withMessage(EMPTY_ERROR_MESSAGES["postName"])
+  .bail()
+  .isLength({
+    min: postSchema.MIN_LENGTH_NAME,
+    max: postSchema.MAX_LENGTH_NAME,
+  })
+  .withMessage(LENGTH_ERROR_MESSAGES["postName"]);
+
+const validateBodyUpdatePostContent: ValidationChain = body("content")
+  .optional()
+  .notEmpty()
+  .withMessage(EMPTY_ERROR_MESSAGES["postContent"])
+  .bail()
+  .isLength({
+    min: postSchema.MIN_LENGTH_CONTENT,
+    max: postSchema.MAX_LENGTH_CONTENT,
+  })
+  .withMessage(LENGTH_ERROR_MESSAGES["postContent"]);
+
+export const validateCreatePost: ValidationChain[] = [
+  validateBodyCreatePostName,
+  validateBodyCreatePostContent,
+];
+
+export const validateUpdatePost: ValidationChain[] = [
+  validateBodyUpdatePostName,
+  validateBodyUpdatePostContent,
 ];
 
 const validateBodyProductName: ValidationChain = body("name")
