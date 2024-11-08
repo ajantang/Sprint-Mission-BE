@@ -199,7 +199,7 @@ async function increaseProductFavorite({
   };
 
   const result: Partial<Product> = await prisma.$transaction(async () => {
-    favoriteproductRepository.createData({ data: favoriteProductData });
+    await favoriteproductRepository.createData({ data: favoriteProductData });
 
     return await productRepository.updateData({
       where: productWhere,
@@ -225,7 +225,7 @@ async function decreaseProductFavorite({
   };
 
   const result: Partial<Product> = await prisma.$transaction(async () => {
-    favoriteproductRepository.deleteData(favoriteProductWhere);
+    await favoriteproductRepository.deleteData(favoriteProductWhere);
 
     return await productRepository.updateData({
       where: productWhere,
