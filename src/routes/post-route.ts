@@ -1,11 +1,11 @@
 import express, { Router } from "express";
 
 import { validationHandler } from "../middlewares/error";
+import { validateAuthorization } from "../middlewares/validator-auth-input";
 import {
-  validateAuthorization,
   validateCreatePost,
   validateUpdatePost,
-} from "../middlewares/validator";
+} from "../middlewares/validator-post-input";
 import { isAuthorizedPostIdParam } from "../middlewares/post";
 import { validateToken, checkToken } from "../middlewares/token";
 import postController from "../controllers/post-controller";

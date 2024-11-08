@@ -3,6 +3,7 @@ import { postSchema } from "./post";
 import { productSchema } from "./product";
 import { imageSchema, MIN_NUMBER_IMAGES, MAX_NUMBER_IMAGES } from "./image";
 import { tagSchema, MIN_NUMBER_TAGS, MAX_NUMBER_TAGS } from "./tag";
+import { queryLimit } from "./query";
 
 export const CUSTOM_ERROR_INFO: { [errCode: number]: string } = {
   40000: "클라이언트 에러입니다",
@@ -12,6 +13,8 @@ export const CUSTOM_ERROR_INFO: { [errCode: number]: string } = {
   40041: `price는 ${productSchema.MIN_VALUE_PRICE} 이상 ${productSchema.MAX_VALUE_PRICE} 이하로 입력해주세요`,
   40042: `images는 ${MIN_NUMBER_IMAGES}에서 ${MAX_NUMBER_IMAGES}개의 요소를 가져야 합니다`,
   40043: `tags는 ${MIN_NUMBER_TAGS}에서 ${MAX_NUMBER_TAGS}개의 요소를 가져야 합니다`,
+  40044: `page는 ${MAX_NUMBER_TAGS} 이상으로 입력해주세요`,
+  40045: `pageNum은 ${MAX_NUMBER_TAGS} 이상으로 입력해주세요`,
   40049: "유효하지 않은 토큰입니다",
   40050: "email 정보가 필요합니다",
   40051: "password 정보가 필요합니다",
@@ -36,6 +39,7 @@ export const CUSTOM_ERROR_INFO: { [errCode: number]: string } = {
   40079: `tag는 ${tagSchema.MIN_LENGTH_TAG}에서 ${tagSchema.MAX_LENGTH_TAG}자의 문자열이어야 합니다`,
   40089: "데이터의 길이가 유효하지 않습니다",
   40090: "이메일 형식이 아닙니다",
+  40091: `orderBy는 ${queryLimit.ORDER_BY.recent} 또는 ${queryLimit.ORDER_BY.oldest} 중 하나여야 합니다`,
   40098: "토큰 형식이 아닙니다",
   40099: "유효하지 않은 데이터 형식입니다",
   40100: "권한이 없습니다",
@@ -63,6 +67,8 @@ export const RANGE_ERROR_MESSAGES: { [errVariable: string]: string } = {
   price: CUSTOM_ERROR_INFO[40041],
   images: CUSTOM_ERROR_INFO[40042],
   tags: CUSTOM_ERROR_INFO[40043],
+  page: CUSTOM_ERROR_INFO[40044],
+  pageNum: CUSTOM_ERROR_INFO[40045],
   default: CUSTOM_ERROR_INFO[40040],
 };
 
@@ -96,6 +102,7 @@ export const LENGTH_ERROR_MESSAGES: { [errVariable: string]: string } = {
 
 export const PATTERN_ERROR_MESSAGES: { [errVariable: string]: string } = {
   email: CUSTOM_ERROR_INFO[40090],
+  orderBy: CUSTOM_ERROR_INFO[40091],
   token: CUSTOM_ERROR_INFO[40098],
   default: CUSTOM_ERROR_INFO[40099],
 };

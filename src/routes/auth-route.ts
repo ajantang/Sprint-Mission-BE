@@ -4,7 +4,7 @@ import {
   validateSignIp,
   validateSignUp,
   validateRefreshAccessToken,
-} from "../middlewares/validator";
+} from "../middlewares/validator-auth-input";
 import { validationHandler } from "../middlewares/error";
 import authController from "../controllers/auth-controller";
 
