@@ -1,8 +1,9 @@
-import { User } from "@prisma/client";
+import { Prisma, User } from "@prisma/client";
 
 import userRepository from "../repositories/user-repository";
 import { ModifyUserParam } from "../types/user-types";
 import { userBaseSelect } from "./selectors/user-select";
+import { hashPassword } from "../utils/password";
 
 async function getUser(userId: string): Promise<Partial<User>> {
   const where = { id: userId };
@@ -19,16 +20,16 @@ async function modifyUser({
   image,
   password,
 }: ModifyUserParam): Promise<Partial<User>> {
-  if (password) {
-  }
-
   const where = { id: userId };
-  const encryptedPassword = "";
-  const data = {
+  const data: Prisma.UserUpdateInput = {
     ...(nickname && { nickname }),
     ...(image && { image }),
-    ...(password && { encryptedPassword }),
   };
+
+  if (password) {
+    const encryptedPassword: string = await hashPassword(password);
+    data.encryptedPassword = encryptedPassword;
+  }
 
   return await userRepository.updateData({
     where,
