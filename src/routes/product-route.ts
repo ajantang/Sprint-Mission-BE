@@ -6,6 +6,7 @@ import {
   validateCreateProduct,
   validateUpdateProduct,
 } from "../middlewares/validator-product-input";
+import { validateListQuery } from "../middlewares/validator-query-input";
 import { isAuthorizedProductIdParam } from "../middlewares/product";
 import { validateToken, checkToken } from "../middlewares/token";
 import productController from "../controllers/product-controller";
@@ -21,7 +22,13 @@ productRouter
     validateToken,
     productController.createProduct
   )
-  .get("/", checkToken, productController.getProductList)
+  .get(
+    "/",
+    validateListQuery,
+    validationHandler,
+    checkToken,
+    productController.getProductList
+  )
   .get(
     "/:productId",
     validateAuthorization,

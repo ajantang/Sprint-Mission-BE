@@ -6,6 +6,7 @@ import {
   validateCreatePost,
   validateUpdatePost,
 } from "../middlewares/validator-post-input";
+import { validateListQuery } from "../middlewares/validator-query-input";
 import { isAuthorizedPostIdParam } from "../middlewares/post";
 import { validateToken, checkToken } from "../middlewares/token";
 import postController from "../controllers/post-controller";
@@ -21,7 +22,13 @@ postRouter
     validateToken,
     postController.createPost
   )
-  .get("/", checkToken, postController.getPostList)
+  .get(
+    "/",
+    validateListQuery,
+    validationHandler,
+    checkToken,
+    postController.getPostList
+  )
   .get(
     "/:postId",
     validateAuthorization,

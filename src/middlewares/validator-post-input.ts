@@ -1,12 +1,10 @@
-import { header, body, ValidationChain } from "express-validator";
+import { body, ValidationChain } from "express-validator";
 
 import { postSchema } from "../constants/post";
 
 import {
-  CUSTOM_ERROR_INFO,
   EMPTY_ERROR_MESSAGES,
   LENGTH_ERROR_MESSAGES,
-  PATTERN_ERROR_MESSAGES,
 } from "../constants/error";
 
 const validateBodyCreatePostName: ValidationChain = body("name")
