@@ -44,8 +44,6 @@ async function createPost({
     select: postFavoriteSelect(userId),
   });
 
-  console.log("createPost : ", result);
-
   return postMapper(result);
 }
 
