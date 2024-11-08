@@ -167,7 +167,7 @@ async function increasePostFavorite({ userId, postId }: PostFavoriteParam) {
   };
 
   const result: Partial<Post> = await prisma.$transaction(async () => {
-    favoritePostRepository.createData({ data: favoritePostData });
+    await favoritePostRepository.createData({ data: favoritePostData });
 
     return await postRepository.updateData({
       where: postWhere,
@@ -190,7 +190,7 @@ async function decreasePostFavorite({ userId, postId }: PostFavoriteParam) {
   };
 
   const result: Partial<Post> = await prisma.$transaction(async () => {
-    favoritePostRepository.deleteData(favoritePostWhere);
+    await favoritePostRepository.deleteData(favoritePostWhere);
 
     return await postRepository.updateData({
       where: postWhere,

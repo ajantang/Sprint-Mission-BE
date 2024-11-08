@@ -10,6 +10,13 @@ async function createData({
   return await prisma.favoritePost.create({ data, select });
 }
 
+// async function createData({
+//   data,
+//   select,
+// }: FavoritePostCreateDataParam): Promise<FavoritePost> {
+//   return await prisma.favoritePost.create({ data, select });
+// }
+
 async function countData(
   where: Prisma.FavoritePostWhereInput
 ): Promise<number> {
