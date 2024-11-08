@@ -4,7 +4,7 @@ import { validationHandler } from "../middlewares/error";
 import { validateAuthorization } from "../middlewares/validator-auth-input";
 import { validateUpdateUser } from "../middlewares/validator-user-input";
 import { validateToken } from "../middlewares/token";
-// import userController from "../controllers/user-controller";
+import userController from "../controllers/user-controller";
 
 const userRouter: Router = express.Router();
 
@@ -13,16 +13,16 @@ userRouter
     "/:userId",
     validateAuthorization,
     validationHandler,
-    validateToken
-    // userController.getUser
+    validateToken,
+    userController.getUser
   )
   .patch(
     "/:userId",
     validateAuthorization,
     validateUpdateUser,
     validationHandler,
-    validateToken
-    // userController.modifyUser
+    validateToken,
+    userController.modifyUser
   );
 
 export default userRouter;

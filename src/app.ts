@@ -2,6 +2,7 @@ import express, { Express } from "express";
 
 import { PORT } from "./config";
 import authRouter from "./routes/auth-route";
+import userRouter from "./routes/user-route";
 import postRouter from "./routes/post-route";
 import productRouter from "./routes/product-route";
 import {
@@ -15,6 +16,7 @@ const app: Express = express();
 app.use(express.json());
 
 app.use("/auth", authRouter);
+app.use("/user", userRouter);
 app.use("/posts", postRouter);
 app.use("/products", productRouter);
 

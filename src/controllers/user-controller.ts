@@ -1,10 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { User } from "@prisma/client";
 
 import userService from "../services/user-service";
-import { CustomError } from "../utils/error";
-
-import { UserSignUpData, UserTokenInfo } from "../types/user-types";
 
 async function getUser(
   req: Request,
