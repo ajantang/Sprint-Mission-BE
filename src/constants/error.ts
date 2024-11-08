@@ -25,7 +25,7 @@ export const CUSTOM_ERROR_INFO: { [errCode: number]: string } = {
   40056: "name 정보가 필요합니다", // product
   40057: "description 정보가 필요합니다",
   40058: "price 정보가 필요합니다",
-  40068: "refreshToken 정보가 필요합니다",
+  40068: "RefreshToken 정보가 필요합니다",
   40069: "정보가 부족합니다",
   40070: `email은 ${userSchema.MAX_LENGTH_EMAIL}자 이하로 입력해주세요`,
   40071: `password는 ${userSchema.MIN_LENGTH_PASSWORD}자 이상 ${userSchema.MAX_LENGTH_PASSWORD}자 이하로 입력해주세요`,

@@ -22,10 +22,10 @@ export function createRefreshToken(userId: string): string {
 }
 
 export function extractUserIdFromRefreshToken(
-  refreshToken: string
+  RefreshToken: string
 ): string | JsonWebTokenError | TokenExpiredError | CustomError {
   try {
-    const decoded = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET) as {
+    const decoded = jwt.verify(RefreshToken, REFRESH_TOKEN_SECRET) as {
       id: string;
     };
 

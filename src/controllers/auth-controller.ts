@@ -4,7 +4,7 @@ import { User } from "@prisma/client";
 import authService from "../services/auth-service";
 import { CustomError } from "../utils/error";
 
-import { userSignUpData, userTokenInfo } from "../types/user-types";
+import { UserSignUpData, UserTokenInfo } from "../types/user-types";
 
 async function signUp(
   req: Request,
@@ -12,7 +12,7 @@ async function signUp(
   next: NextFunction
 ): Promise<void> {
   try {
-    const { email, password, nickname, name }: userSignUpData = req.body;
+    const { email, password, nickname, name }: UserSignUpData = req.body;
     const authInfo: User | null = await authService.signUp({
       email,
       password,
@@ -36,8 +36,8 @@ async function signIn(
   next: NextFunction
 ): Promise<void> {
   try {
-    const { email, password }: userSignUpData = req.body;
-    const authInfo: userTokenInfo | null | boolean = await authService.signIn({
+    const { email, password }: UserSignUpData = req.body;
+    const authInfo: UserTokenInfo | null | boolean = await authService.signIn({
       email,
       password,
     });
@@ -62,9 +62,9 @@ async function refreshAccessToken(
   next: NextFunction
 ): Promise<void> {
   try {
-    const { refreshToken }: { refreshToken: string } = req.body;
+    const { RefreshToken }: { RefreshToken: string } = req.body;
     const newAccessToken: string | Error = await authService.refreshAccessToken(
-      refreshToken
+      RefreshToken
     );
 
     res.status(200).send({ accessToken: newAccessToken });

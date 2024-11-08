@@ -1,4 +1,4 @@
-import { userIndetificationInfo, userTokenInfo } from "../../types/user-types";
+import { userIndetificationInfo, UserTokenInfo } from "../../types/user-types";
 
 export function userIndetificationInfoMapper({
   userInfo,
@@ -8,7 +8,7 @@ export function userIndetificationInfoMapper({
   userInfo: userIndetificationInfo;
   accessToken: string;
   refreshToken: string;
-}): userTokenInfo {
+}): UserTokenInfo {
   return {
     id: userInfo.id,
     nickname: userInfo.nickname,

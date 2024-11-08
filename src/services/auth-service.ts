@@ -12,9 +12,9 @@ import {
 import { userIndetificationInfoMapper } from "./mappers/user-mapper";
 
 import {
-  userSignUpData,
-  userSignInData,
-  userTokenInfo,
+  UserSignUpData,
+  UserSignInData,
+  UserTokenInfo,
 } from "../types/user-types";
 import {
   userBaseSelect,
@@ -27,7 +27,7 @@ async function signUp({
   password,
   nickname,
   name,
-}: userSignUpData): Promise<User> {
+}: UserSignUpData): Promise<User> {
   const encryptedPassword: string = await hashPassword(password);
 
   return prisma.$transaction(async () => {
@@ -44,7 +44,7 @@ async function signUp({
 async function signIn({
   email,
   password,
-}: userSignInData): Promise<userTokenInfo | null | boolean> {
+}: UserSignInData): Promise<UserTokenInfo | null | boolean> {
   return prisma.$transaction(async () => {
     const userWhere = { email: email };
     const findUserData = await userRepository.findUniqueOrThrowData({
@@ -77,10 +77,10 @@ async function signIn({
 }
 
 async function refreshAccessToken(
-  refreshToken: string
+  RefreshToken: string
 ): Promise<string | Error> {
   const userId: string | JsonWebTokenError | TokenExpiredError | CustomError =
-    extractUserIdFromRefreshToken(refreshToken);
+    extractUserIdFromRefreshToken(RefreshToken);
 
   if (typeof userId === "string") {
     return createAccessToken(userId);

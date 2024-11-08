@@ -48,7 +48,7 @@ const validateBodyName: ValidationChain = body("name")
   })
   .withMessage(LENGTH_ERROR_MESSAGES["name"]);
 
-const validateBodyRefreshToken: ValidationChain = body("refreshToken")
+const validateBodyRefreshToken: ValidationChain = body("RefreshToken")
   .notEmpty()
   .withMessage(EMPTY_ERROR_MESSAGES["token"])
   .bail()

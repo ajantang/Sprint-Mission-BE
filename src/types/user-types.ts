@@ -1,24 +1,24 @@
 import { Prisma } from "@prisma/client";
 
-export interface userSignInData {
+export interface UserSignInData {
   email: string;
   password: string;
 }
 
-export interface userSignUpData extends userSignInData {
+export interface UserSignUpData extends UserSignInData {
   nickname: string;
   name: string;
 }
 
-export interface refreshToken {
+export interface RefreshToken {
   refreshToken: string;
 }
 
-export interface tokens extends refreshToken {
+export interface Tokens extends RefreshToken {
   accessToken: string;
 }
 
-export interface userBaseInfo {
+export interface UserBaseInfo {
   id: string;
   nickname: string;
   name: string;
@@ -26,11 +26,11 @@ export interface userBaseInfo {
   createdAt: Date;
 }
 
-export interface userIndetificationInfo extends userBaseInfo {
+export interface userIndetificationInfo extends UserBaseInfo {
   encryptedPassword: string;
 }
 
-export interface userTokenInfo extends userBaseInfo, tokens {}
+export interface UserTokenInfo extends UserBaseInfo, Tokens {}
 
 export interface UserCommentInfo {
   id: string;
@@ -38,17 +38,33 @@ export interface UserCommentInfo {
   image: string | null;
 }
 
-interface userCreateInput {
+interface UserCreateInput {
   data: Prisma.UserCreateInput;
 }
-interface userSelect {
+interface UserUpdateInput {
+  data: Prisma.UserUpdateInput;
+}
+interface UserSelect {
   select?: Prisma.UserSelect;
 }
-interface userWhereUniqueInpu {
+interface UserWhereUniqueInpu {
   where: Prisma.UserWhereUniqueInput;
 }
 
-export interface userCreateDataParam extends userCreateInput, userSelect {}
-export interface userFindUniqueOrThrowDataParam
-  extends userWhereUniqueInpu,
-    userSelect {}
+export interface UserCreateDataParam extends UserCreateInput, UserSelect {}
+
+export interface UserFindUniqueOrThrowDataParam
+  extends UserWhereUniqueInpu,
+    UserSelect {}
+
+export interface UserUpdateDataParam
+  extends UserWhereUniqueInpu,
+    UserUpdateInput,
+    UserSelect {}
+
+export interface ModifyUserParam {
+  userId: string;
+  nickname: string | null;
+  image: string | null;
+  password: string | null;
+}
