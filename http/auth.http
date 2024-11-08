@@ -3,10 +3,10 @@ POST http://localhost:3000/auth/sign-up
 Content-Type : application/json
 
 {
-    "email" : "codeit0@codeit.com",
-    "password" : "!codeit0",
-    "nickname" : "코드잇0",
-    "name" : "코드잇"
+    "email" : "codeit1@codeit.com",
+    "password" : "!codeit1",
+    "nickname" : "코드잇1",
+    "name" : "코드잇1"
 }
 
 ###
@@ -16,6 +16,15 @@ Content-Type : application/json
 {
     "email" : "codeit0@codeit.com",
     "password" : "!codeit0"
+}
+
+###
+POST http://localhost:3000/auth/sign-in
+Content-Type : application/json
+
+{
+    "email" : "codeit1@codeit.com",
+    "password" : "!codeit1"
 }
 
 ###

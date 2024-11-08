@@ -46,7 +46,6 @@ export function validateAccessToken(
     const decoded = jwt.verify(token, ACCESS_TOKEN_SECRET) as JwtPayload;
 
     if (typeof decoded.id === "string") {
-      console.log("validateAccessToken decoded.id :", decoded.id);
       return decoded.id;
     }
 
