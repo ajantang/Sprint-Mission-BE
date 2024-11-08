@@ -1,9 +1,10 @@
-import { Prisma, PostImage } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
 import prisma from "./prisma";
+import { PostImageCreateInput } from "../types/post-image-types";
 
 async function createManyData(
-  data: Prisma.PostImageCreateManyInput
+  data: PostImageCreateInput[]
 ): Promise<{ count: number }> {
   return await prisma.postImage.createMany({ data });
 }

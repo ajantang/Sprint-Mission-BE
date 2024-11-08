@@ -14,5 +14,5 @@ export const productSchema = {
   MAX_VALUE_PRICE,
 };
 
-export const DEFAULT_POST_TAKE = 10;
+export const DEFAULT_PRODUCT_TAKE = 10;
 export const DEFAULT_COMMENT_TAKE = 100;

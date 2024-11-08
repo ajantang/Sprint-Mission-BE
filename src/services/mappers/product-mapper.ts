@@ -1,6 +1,6 @@
 import { ProductData, ProductDetailData } from "../../types/product-types";
 
-export function ProductMapper(data: ProductData | ProductDetailData) {
+export function productMapper(data: ProductData | ProductDetailData) {
   return {
     id: data.id,
     name: data.name,
@@ -8,6 +8,7 @@ export function ProductMapper(data: ProductData | ProductDetailData) {
     price: data.price,
     favoriteCount: data.favoriteCount,
     images: data.ProductImage?.map((imgObj) => imgObj.image),
+    tags: data.ProductTag?.map((tagObj) => tagObj.tag),
     ownerId: data.User?.id,
     ownerImage: data.User?.image,
     ownerNickname: data.User?.nickname,
@@ -16,9 +17,9 @@ export function ProductMapper(data: ProductData | ProductDetailData) {
   };
 }
 
-export function ProductDetailMapper(data: ProductDetailData) {
+export function productDetailMapper(data: ProductDetailData) {
   return {
-    ...ProductMapper(data),
+    ...productMapper(data),
     comments:
       data.ProductComment?.map((comment) => ({
         id: comment.id,
@@ -33,16 +34,16 @@ export function ProductDetailMapper(data: ProductDetailData) {
   };
 }
 
-type ProductMapperReturnType = ReturnType<typeof ProductMapper>;
+type ProductMapperReturnType = ReturnType<typeof productMapper>;
 
-export function ProductListMapper({
+export function productListMapper({
   count,
-  ProductList,
+  productList,
 }: {
   count: number;
-  ProductList: ProductData[];
+  productList: ProductData[];
 }) {
   const mappedProducts: ProductMapperReturnType[] =
-    ProductList.map(ProductMapper);
-  return { totalCount: count, Products: mappedProducts };
+    productList.map(productMapper);
+  return { totalCount: count, products: mappedProducts };
 }

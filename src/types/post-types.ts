@@ -9,6 +9,7 @@ import { UserCommentInfo } from "./user-types";
 export interface PostCreateData {
   name: string;
   content: string;
+  images?: string[];
 }
 
 export interface PostListQuery {
@@ -26,6 +27,7 @@ export interface PostUpdateData {
 interface BasePostParam {
   name: string;
   content: string;
+  images?: string[];
 }
 
 export interface CreatePostParam extends BasePostParam {

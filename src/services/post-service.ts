@@ -2,6 +2,7 @@ import { Post } from "@prisma/client";
 
 import prisma from "../repositories/prisma";
 import postRepository from "../repositories/post-repository";
+import postImageRepository from "../repositories/post-image-repository";
 import favoritePostRepository from "../repositories/favorite-post-repository";
 import {
   CreatePostParam,
@@ -31,17 +32,38 @@ async function createPost({
   userId,
   name,
   content,
+  images,
 }: CreatePostParam): Promise<PostBaseInfo> {
-  const data = {
-    User: {
-      connect: { id: userId },
-    },
-    name,
-    content,
-  };
-  const result = await postRepository.createData({
-    data,
-    select: postFavoriteSelect(userId),
+  const result = await prisma.$transaction(async () => {
+    const data = {
+      User: {
+        connect: { id: userId },
+      },
+      name,
+      content,
+    };
+    const newPost = await postRepository.createData({
+      data,
+      select: postSelect,
+    });
+
+    if (images && images.length > 0 && newPost.id) {
+      const imageListData = images?.map((image) => {
+        return { postId: newPost.id, image } as {
+          postId: string;
+          image: string;
+        };
+      });
+
+      await postImageRepository.createManyData(imageListData);
+    }
+
+    const where = { id: newPost.id };
+
+    return await postRepository.findUniqueOrThrowData({
+      where,
+      select: postFavoriteSelect(userId),
+    });
   });
 
   return postMapper(result);
@@ -99,16 +121,28 @@ async function modifyPost({
   postId,
   name,
   content,
+  images,
 }: ModifyPostParam): Promise<PostBaseInfo> {
-  const where = {
-    id: postId,
-  };
-  const data = { ...(name && { name }), ...(content && { content }) };
+  const result = await prisma.$transaction(async () => {
+    if (images) {
+      const imageListData = images?.map((image) => {
+        return { postId, image };
+      });
 
-  const result = await postRepository.updateData({
-    where,
-    data,
-    select: postFavoriteSelect(userId),
+      await postImageRepository.deleteManyData({ postId });
+      await postImageRepository.createManyData(imageListData);
+    }
+
+    const where = {
+      id: postId,
+    };
+    const data = { ...(name && { name }), ...(content && { content }) };
+
+    return await postRepository.updateData({
+      where,
+      data,
+      select: postFavoriteSelect(userId),
+    });
   });
 
   return postMapper(result);

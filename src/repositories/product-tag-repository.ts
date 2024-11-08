@@ -1,9 +1,10 @@
 import { Prisma } from "@prisma/client";
 
 import prisma from "./prisma";
+import { ProductTagCreateInput } from "../types/product-tag-types";
 
 async function createManyData(
-  data: Prisma.ProductTagCreateManyInput
+  data: ProductTagCreateInput[]
 ): Promise<{ count: number }> {
   return await prisma.productTag.createMany({ data });
 }

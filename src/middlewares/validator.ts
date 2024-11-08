@@ -216,13 +216,3 @@ export const validateProduct: ValidationChain[] = [
   validateBodyImages,
   validateBodyTags,
 ];
-
-// const validateBody : ValidationChain = body("")
-// .notEmpty()
-// .withMessage(EMPTY_ERROR_MESSAGES[""])
-// .bail()
-// .isLength({
-//   min: ,
-//   max: ,
-// })
-// .withMessage(LENGTH_ERROR_MESSAGES[""]);

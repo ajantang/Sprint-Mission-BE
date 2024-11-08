@@ -7,6 +7,7 @@ export interface ProductCreateData {
   name: string;
   description: string;
   price: string;
+  images?: string[];
   tags?: string[];
 }
 
@@ -21,6 +22,7 @@ export interface ProductUpdateData {
   name: string;
   description: string;
   price: string;
+  images?: string[];
   tags?: string[];
 }
 
@@ -28,6 +30,7 @@ interface BaseProductParam {
   name: string;
   description: string;
   price: number;
+  images?: string[];
   tags?: string[];
   favoriteCount?: number;
 }
