@@ -1,9 +1,34 @@
 import { Prisma } from "@prisma/client";
 
+import { productSelect } from "../services/selectors/product-select";
+import { UserCommentInfo } from "./user-types";
+
+export interface ProductCreateData {
+  name: string;
+  description: string;
+  price: string;
+  tags?: string[];
+}
+
+export interface ProductListQuery {
+  orderBy: string;
+  page: number;
+  pageSize: number;
+  keyword: string;
+}
+
+export interface ProductUpdateData {
+  name: string;
+  description: string;
+  price: string;
+  tags?: string[];
+}
+
 interface BaseProductParam {
   name: string;
   description: string;
   price: number;
+  tags?: string[];
   favoriteCount?: number;
 }
 
@@ -11,16 +36,13 @@ export interface CreateProductParam extends BaseProductParam {
   userId: string;
 }
 
-export interface GetProductListParam {
-  orderBy: string;
-  skip: number;
-  take: number;
-  keyword: string;
+export interface GetProductListParam extends ProductListQuery {
+  userId: string;
 }
 
-export interface ModifyProductParam extends BaseProductParam {
-  productId: string;
-}
+export interface ModifyProductParam
+  extends BaseProductParam,
+    ProductFavoriteParam {}
 
 export interface ProductFavoriteParam {
   userId: string;
@@ -65,3 +87,68 @@ export interface ProductUpdateDataParam
   extends ProductWhereUniqueInput,
     ProductUpdateInput,
     ProductSelect {}
+
+export type ProductData = Partial<
+  Prisma.ProductGetPayload<{
+    select: typeof productSelect;
+  }>
+>;
+
+interface ProductCommentData {
+  id: string;
+  content: string;
+  createdAt: Date;
+  User: UserCommentInfo;
+}
+
+export interface ProductDetailData {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  ProductTag: { tag: string }[];
+  favoriteCount: number;
+  createdAt: Date;
+  ProductImage: { image: string }[];
+  User: {
+    id: string;
+    nickname: string;
+    image: string | null;
+  };
+  FavoriteProduct?: { id: string }[];
+  ProductComment?: ProductCommentData[];
+}
+
+export interface ProductBaseInfo {
+  id: string | null | undefined;
+  name: string | null | undefined;
+  description: string | null | undefined;
+  price: number | null | undefined;
+  favoriteCount: number | null | undefined;
+  images: string[] | null | undefined;
+  ownerId: string | null | undefined;
+  ownerImage: string | null | undefined;
+  ownerNickname: string | undefined;
+  isFavorite: boolean | undefined;
+  createdAt: Date | undefined;
+}
+
+export interface ProductDetailInfo extends ProductBaseInfo {
+  comments:
+    | Array<{
+        id: string;
+        content: string;
+        createdAt: Date;
+        User: {
+          id: string;
+          nickname: string;
+          image: string | null;
+        };
+      }>
+    | undefined;
+}
+
+export interface ProductListInfo {
+  totalCount: number;
+  products: ProductBaseInfo[];
+}
