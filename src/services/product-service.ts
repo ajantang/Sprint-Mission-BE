@@ -94,7 +94,10 @@ async function getProductList({
   const productOrderBy = { createdAt: ORDER_BY[orderBy] || DEFAULT_ORDER_BY };
   const where = {
     ...(keyword && {
-      OR: [{ name: { contains: keyword } }, { content: { contains: keyword } }],
+      OR: [
+        { name: { contains: keyword } },
+        { description: { contains: keyword } },
+      ],
     }),
   };
   const iPage: number = parseInt(page as unknown as string) || 1;
