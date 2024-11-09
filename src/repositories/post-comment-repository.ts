@@ -11,14 +11,14 @@ import {
 async function createData({
   data,
   select,
-}: PostCommentCreateDataParam): Promise<PostComment> {
+}: PostCommentCreateDataParam): Promise<Partial<PostComment>> {
   return await prisma.postComment.create({ data, select });
 }
 
 async function findUniqueOrThrowData({
   where,
   select,
-}: PostCommentFindUniqueOrThrowDataParam): Promise<PostComment> {
+}: PostCommentFindUniqueOrThrowDataParam): Promise<Partial<PostComment>> {
   return await prisma.postComment.findUniqueOrThrow({ where, select });
 }
 
@@ -32,7 +32,7 @@ async function findManyByPaginationData({
   take,
   where,
   select,
-}: PostCommentFindManyByPaginationParam): Promise<PostComment[]> {
+}: PostCommentFindManyByPaginationParam): Promise<Partial<PostComment>[]> {
   return await prisma.postComment.findMany({
     orderBy,
     skip,
@@ -46,7 +46,7 @@ async function updateData({
   where,
   data,
   select,
-}: PostCommentUpdateDataParam): Promise<PostComment> {
+}: PostCommentUpdateDataParam): Promise<Partial<PostComment>> {
   return await prisma.postComment.update({ where, data, select });
 }
 

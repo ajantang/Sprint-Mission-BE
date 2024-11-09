@@ -4,6 +4,7 @@ import { PORT } from "./config";
 import authRouter from "./routes/auth-route";
 import userRouter from "./routes/user-route";
 import postRouter from "./routes/post-route";
+import postCommentRouter from "./routes/post-comment-route";
 import productRouter from "./routes/product-route";
 import {
   logErrors,
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/posts", postRouter);
+app.use("/post-comment", postCommentRouter);
 app.use("/products", productRouter);
 
 app.use(logErrors);
