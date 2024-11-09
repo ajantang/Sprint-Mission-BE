@@ -3,6 +3,8 @@ import { postSchema } from "./post";
 import { productSchema } from "./product";
 import { imageSchema, MIN_NUMBER_IMAGES, MAX_NUMBER_IMAGES } from "./image";
 import { tagSchema, MIN_NUMBER_TAGS, MAX_NUMBER_TAGS } from "./tag";
+import { postCommentSchema } from "./post-comment";
+import { productCommentSchema } from "./product-comment";
 import { queryLimit } from "./query";
 
 export const CUSTOM_ERROR_INFO: { [errCode: number]: string } = {
@@ -25,6 +27,10 @@ export const CUSTOM_ERROR_INFO: { [errCode: number]: string } = {
   40056: "name 정보가 필요합니다", // product
   40057: "description 정보가 필요합니다",
   40058: "price 정보가 필요합니다",
+  40059: "content 정보가 필요합니다", // post comment
+  40060: "postId 정보가 필요합니다",
+  40061: "content 정보가 필요합니다", // product comment
+  40062: "productId 정보가 필요합니다",
   40068: "RefreshToken 정보가 필요합니다",
   40069: "정보가 부족합니다",
   40070: `email은 ${userSchema.MAX_LENGTH_EMAIL}자 이하로 입력해주세요`,
@@ -35,12 +41,16 @@ export const CUSTOM_ERROR_INFO: { [errCode: number]: string } = {
   40075: `content은 ${postSchema.MIN_LENGTH_CONTENT}자 이상 ${postSchema.MAX_LENGTH_CONTENT}자 이하로 입력해주세요`,
   40076: `name은 ${productSchema.MIN_LENGTH_NAME}자 이상 ${productSchema.MAX_LENGTH_NAME}자 이하로 입력해주세요`,
   40077: `description은 ${productSchema.MIN_LENGTH_DESCRIPTION}자 이상 ${productSchema.MAX_LENGTH_DESCRIPTION}자 이하로 입력해주세요`,
-  40078: `image url은 ${imageSchema.MIN_LENGTH_IMAGE}에서 ${imageSchema.MAX_LENGTH_IMAGE}자의 문자열이어야 합니다`,
-  40079: `tag는 ${tagSchema.MIN_LENGTH_TAG}에서 ${tagSchema.MAX_LENGTH_TAG}자의 문자열이어야 합니다`,
+  40078: `image url은 ${imageSchema.MIN_LENGTH_IMAGE}자 이상 ${imageSchema.MAX_LENGTH_IMAGE}자 이하로 입력해주세요`,
+  40079: `tag는 ${tagSchema.MIN_LENGTH_TAG}자 이상 ${tagSchema.MAX_LENGTH_TAG}자 이하로 입력해주세요`,
+  40080: `content는 ${postCommentSchema.MIN_LENGTH_CONTENT}자 이상 ${postCommentSchema.MAX_LENGTH_CONTENT}자 이하로 입력해주세요`,
+  40081: `content는 ${productCommentSchema.MIN_LENGTH_CONTENT}자 이상 ${productCommentSchema.MAX_LENGTH_CONTENT}자 이하로 입력해주세요`,
   40089: "데이터의 길이가 유효하지 않습니다",
   40090: "이메일 형식이 아닙니다",
   40091: `orderBy는 ${queryLimit.ORDER_BY.recent} 또는 ${queryLimit.ORDER_BY.oldest} 중 하나여야 합니다`,
-  40098: "토큰 형식이 아닙니다",
+  40096: "postId 형식이 유효하지 않습니다",
+  40097: "productId 형식이 유효하지 않습니다",
+  40098: "토큰 형식이 유효하지 않습니다",
   40099: "유효하지 않은 데이터 형식입니다",
   40100: "권한이 없습니다",
   40199: "로그인이 필요합니다",
@@ -82,6 +92,10 @@ export const EMPTY_ERROR_MESSAGES: { [errVariable: string]: string } = {
   productName: CUSTOM_ERROR_INFO[40056],
   productDescription: CUSTOM_ERROR_INFO[40057],
   price: CUSTOM_ERROR_INFO[40058],
+  postCommentContent: CUSTOM_ERROR_INFO[40059],
+  postId: CUSTOM_ERROR_INFO[40060],
+  productCommentContent: CUSTOM_ERROR_INFO[40061],
+  productId: CUSTOM_ERROR_INFO[40062],
   token: CUSTOM_ERROR_INFO[40068],
   default: CUSTOM_ERROR_INFO[40069],
 };
@@ -97,12 +111,16 @@ export const LENGTH_ERROR_MESSAGES: { [errVariable: string]: string } = {
   productDescription: CUSTOM_ERROR_INFO[40077],
   image: CUSTOM_ERROR_INFO[40078],
   tag: CUSTOM_ERROR_INFO[40079],
+  postCommentContent: CUSTOM_ERROR_INFO[40080],
+  productCommentContent: CUSTOM_ERROR_INFO[40081],
   default: CUSTOM_ERROR_INFO[40089],
 };
 
 export const PATTERN_ERROR_MESSAGES: { [errVariable: string]: string } = {
   email: CUSTOM_ERROR_INFO[40090],
   orderBy: CUSTOM_ERROR_INFO[40091],
+  postId: CUSTOM_ERROR_INFO[40097],
+  productId: CUSTOM_ERROR_INFO[40097],
   token: CUSTOM_ERROR_INFO[40098],
   default: CUSTOM_ERROR_INFO[40099],
 };
