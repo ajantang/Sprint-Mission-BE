@@ -17,6 +17,8 @@ export const config: {
   REFRESH_TOKEN_SECRET: string;
   ARGON2_SECRET_KEY: string;
   ARGON2_SALT: number;
+  GOOGLE_CLOUD_BUCKET_NAME: string;
+  GOOGLE_APPLICATION_CREDENTIALS: string;
 } = {
   DB_URL: process.env.DB_URL as string,
   PORT: process.env.PORT as string,
@@ -24,4 +26,7 @@ export const config: {
   REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET as string,
   ARGON2_SECRET_KEY: process.env.ARGON2_SECRET_KEY as string,
   ARGON2_SALT: Number(process.env.ARGON2_SALT) || 16,
+  GOOGLE_CLOUD_BUCKET_NAME: process.env.GOOGLE_CLOUD_BUCKET_NAME as string,
+  GOOGLE_APPLICATION_CREDENTIALS: process.env
+    .GOOGLE_APPLICATION_CREDENTIALS as string,
 };

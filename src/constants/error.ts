@@ -31,6 +31,7 @@ export const CUSTOM_ERROR_INFO: { [errCode: number]: string } = {
   40060: "postId 정보가 필요합니다",
   40061: "content 정보가 필요합니다", // product comment
   40062: "productId 정보가 필요합니다",
+  40067: "file이 없습니다",
   40068: "RefreshToken 정보가 필요합니다",
   40069: "정보가 부족합니다",
   40070: `email은 ${userSchema.MAX_LENGTH_EMAIL}자 이하로 입력해주세요`,
@@ -96,6 +97,7 @@ export const EMPTY_ERROR_MESSAGES: { [errVariable: string]: string } = {
   postId: CUSTOM_ERROR_INFO[40060],
   productCommentContent: CUSTOM_ERROR_INFO[40061],
   productId: CUSTOM_ERROR_INFO[40062],
+  file: CUSTOM_ERROR_INFO[40067],
   token: CUSTOM_ERROR_INFO[40068],
   default: CUSTOM_ERROR_INFO[40069],
 };
