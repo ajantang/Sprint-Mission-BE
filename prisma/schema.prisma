@@ -95,8 +95,8 @@ model ProductComment {
     Product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
     productId String   @map("product_id")
     content   String   @db.VarChar(500)
-    User      User?    @relation(fields: [userId], references: [id])
-    userId    String?  @map("user_id")
+    User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId    String   @map("user_id")
     createdAt DateTime @default(now()) @map("created_at")
     updatedAt DateTime @updatedAt @map("updated_at")
 
