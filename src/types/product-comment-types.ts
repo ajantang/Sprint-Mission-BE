@@ -1,5 +1,22 @@
 import { Prisma } from "@prisma/client";
 
+import { UserCommentInfo } from "./user-types";
+
+export interface ProductCommentCreateData {
+  productId: string;
+  content: string;
+}
+
+export interface ProductCommentListQuery {
+  orderBy: string;
+  page: number;
+  pageSize: number;
+}
+
+export interface ProductCommentUpdateData {
+  content: string;
+}
+
 interface BaseProductCommentParam {
   productId: string;
   userId: string;
@@ -8,14 +25,13 @@ interface BaseProductCommentParam {
 
 export interface CreateProductCommentParam extends BaseProductCommentParam {}
 
-export interface GetProductCommentListParam {
-  orderBy: string;
-  skip: number;
-  take: number;
+export interface GetProductCommentListParam extends ProductCommentListQuery {
+  productId: string;
 }
 
-export interface ModifyProductCommentParam extends BaseProductCommentParam {
+export interface ModifyProductCommentParam {
   productCommentId: string;
+  content: string;
 }
 
 export interface ProductCommentParam {
@@ -44,6 +60,14 @@ interface ProductCommentPagenationInput {
   take: number;
 }
 
+export interface ProductCommentData {
+  id: string;
+  productId: string;
+  content: string;
+  createdAt: Date;
+  User: UserCommentInfo;
+}
+
 export interface ProductCommentCreateDataParam
   extends ProductCommentCreateInput,
     ProductCommentSelect {}
@@ -61,3 +85,18 @@ export interface ProductCommentUpdateDataParam
   extends ProductCommentWhereUniqueInput,
     ProductCommentUpdateInput,
     ProductCommentSelect {}
+
+export interface ProductCommentBaseInfo {
+  id: string | null | undefined;
+  productId: string | null | undefined;
+  content: string | null | undefined;
+  ownerId: string | null | undefined;
+  ownerImage: string | null | undefined;
+  ownerNickname: string | undefined;
+  createdAt: Date | undefined;
+}
+
+export interface ProductCommentListInfo {
+  totalCount: number;
+  posts: ProductCommentBaseInfo[];
+}
