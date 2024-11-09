@@ -1,9 +1,6 @@
 import { Prisma } from "@prisma/client";
 
-import {
-  postSelect,
-  postDetailSelect,
-} from "../services/selectors/post-select";
+import { postSelect } from "../services/selectors/post-select";
 import { PostCommentData } from "./post-comment-types";
 
 export interface PostCreateData {
