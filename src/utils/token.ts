@@ -32,7 +32,7 @@ export function extractUserIdFromRefreshToken(
     return decoded.id;
   } catch (err: unknown) {
     if (err instanceof JsonWebTokenError) {
-      return err; // 커스텀 에러 예정
+      return new CustomError(50020); // 에러 종류 확인 필요
     }
 
     return new CustomError(50020);

@@ -1,6 +1,8 @@
 import argon2 from "argon2";
 import crypto from "crypto";
 
+import { CustomError } from "./error";
+
 import { ARGON2_SECRET_KEY, ARGON2_SALT } from "../config";
 
 export async function hashPassword(password: string): Promise<string> {
@@ -15,7 +17,7 @@ export async function hashPassword(password: string): Promise<string> {
     });
     return hash;
   } catch (error) {
-    throw new Error("Error hashing password"); // 커스텀 에러로 변경 예정
+    throw new CustomError(50021);
   }
 }
 
@@ -30,6 +32,6 @@ export async function verifyPassword({
     const isMatch = await argon2.verify(hashedPassword, plainPassword);
     return isMatch;
   } catch (error) {
-    throw new Error("Error verifying password"); // 커스텀 에러로 변경 예정
+    throw new CustomError(50022);
   }
 }

@@ -71,7 +71,9 @@ export const CUSTOM_ERROR_INFO: { [errCode: number]: string } = {
   41500: "Unsupported Media Type",
   50000: "서버 에러입니다",
   50010: "계정 생성에 실패하였습니다",
-  50020: "토큰 복호화에 실패하였습니다",
+  50020: "토큰 복호화를 실패하였습니다",
+  50021: "토큰 암호화를 실패하였습니다",
+  50022: "토큰 검증을 실패하였습니다",
 };
 
 export const RANGE_ERROR_MESSAGES: { [errVariable: string]: string } = {
