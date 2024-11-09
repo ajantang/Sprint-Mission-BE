@@ -41,6 +41,6 @@ export function postListMapper({
   count: number;
   postList: PostData[];
 }) {
-  const mappedPosts: PostMapperReturnType[] = postList.map(postMapper);
-  return { totalCount: count, posts: mappedPosts };
+  const mappedPostList: PostMapperReturnType[] = postList.map(postMapper);
+  return { totalCount: count, posts: mappedPostList };
 }

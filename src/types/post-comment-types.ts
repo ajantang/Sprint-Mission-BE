@@ -1,5 +1,7 @@
 import { Prisma } from "@prisma/client";
 
+import { UserCommentInfo } from "./user-types";
+
 interface BasePostCommentParam {
   postId: string;
   userId: string;
@@ -42,6 +44,13 @@ interface PostCommentPagenationInput {
   orderBy: { [id: string]: string };
   skip: number;
   take: number;
+}
+
+export interface PostCommentData {
+  id: string;
+  content: string;
+  createdAt: Date;
+  User: UserCommentInfo;
 }
 
 export interface PostCommentCreateDataParam

@@ -4,7 +4,7 @@ import {
   postSelect,
   postDetailSelect,
 } from "../services/selectors/post-select";
-import { UserCommentInfo } from "./user-types";
+import { PostCommentData } from "./post-comment-types";
 
 export interface PostCreateData {
   name: string;
@@ -87,13 +87,6 @@ export type PostData = Partial<
     select: typeof postSelect;
   }>
 >;
-
-interface PostCommentData {
-  id: string;
-  content: string;
-  createdAt: Date;
-  User: UserCommentInfo;
-}
 
 export interface PostDetailData {
   id: string;
