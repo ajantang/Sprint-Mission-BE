@@ -1,6 +1,6 @@
 import { config } from "./env";
 
-export const DB_URL: string = config.DB_URL;
+export const DATABASE_URL: string = config.DATABASE_URL;
 export const PORT: string = config.PORT;
 export const ACCESS_TOKEN_SECRET: string = config.ACCESS_TOKEN_SECRET;
 export const REFRESH_TOKEN_SECRET: string = config.REFRESH_TOKEN_SECRET;
