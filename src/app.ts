@@ -21,9 +21,9 @@ app.use(express.json());
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/posts", postRouter);
-app.use("/post-comment", postCommentRouter);
+app.use("/post-comments", postCommentRouter);
 app.use("/products", productRouter);
-app.use("/product-comment", productCommentRouter);
+app.use("/product-comments", productCommentRouter);
 app.use("/image", imageRouter);
 
 app.use(logErrors);
