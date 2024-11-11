@@ -36,7 +36,7 @@ async function getProductCommentList(
   next: NextFunction
 ): Promise<void> {
   try {
-    const { productId }: ProductCommentCreateData = req.body;
+    const { productId } = req.params;
     const { orderBy, page, pageSize } =
       req.query as unknown as ProductCommentListQuery;
     const ProductCommentListInfo =

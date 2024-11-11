@@ -23,12 +23,6 @@ productCommentRouter
     validateToken,
     productCommentController.createProductComment
   )
-  .get(
-    "/",
-    validateListQuery,
-    validationHandler,
-    productCommentController.getProductCommentList
-  )
   .get("/:productCommentId", productCommentController.getProductComment)
   .patch(
     "/:productCommentId",

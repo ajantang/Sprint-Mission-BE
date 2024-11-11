@@ -7,6 +7,7 @@ import postRouter from "./routes/post-route";
 import postCommentRouter from "./routes/post-comment-route";
 import productRouter from "./routes/product-route";
 import productCommentRouter from "./routes/product-comment-route";
+import productCommentListRouter from "./routes/product-comment-list-route";
 import imageRouter from "./routes/image-route";
 import {
   logErrors,
@@ -24,6 +25,7 @@ app.use("/posts", postRouter);
 app.use("/post-comments", postCommentRouter);
 app.use("/products", productRouter);
 app.use("/product-comments", productCommentRouter);
+app.use("/product", productCommentListRouter);
 app.use("/image", imageRouter);
 
 app.use(logErrors);
