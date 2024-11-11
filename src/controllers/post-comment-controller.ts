@@ -34,7 +34,7 @@ async function getPostCommentList(
   next: NextFunction
 ): Promise<void> {
   try {
-    const { postId }: PostCommentCreateData = req.body;
+    const { postId } = req.params;
     const { orderBy, page, pageSize } =
       req.query as unknown as PostCommentListQuery;
     const postCommentListInfo = await postCommentService.getPostCommentList({
