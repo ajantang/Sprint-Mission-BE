@@ -16,6 +16,7 @@ export async function isAuthorizedPostCommentIdParam(
     const where = { id: postCommentId };
     const postInfo = await postCommentRepository.findUniqueOrThrowData({
       where,
+      select: { userId: true },
     });
 
     if (postInfo.userId !== userId) {

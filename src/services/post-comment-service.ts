@@ -75,10 +75,14 @@ async function getPostComment(
     id: postCommentId,
   };
 
-  const result = (await postCommentRepository.findUniqueOrThrowData({
+  const result = await postCommentRepository.findUniqueOrThrowData({
     where,
     select: postCommentSelect,
-  })) as PostCommentData;
+  });
+  // const result = (await postCommentRepository.findUniqueOrThrowData({
+  //   where,
+  //   select: postCommentSelect,
+  // })) as PostCommentData;
 
   return postCommentMapper(result);
 }

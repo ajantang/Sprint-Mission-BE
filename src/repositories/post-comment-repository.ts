@@ -15,10 +15,13 @@ async function createData({
   return await prisma.postComment.create({ data, select });
 }
 
-async function findUniqueOrThrowData({
+async function findUniqueOrThrowData<TSelect extends Prisma.PostCommentSelect>({
   where,
   select,
-}: PostCommentFindUniqueOrThrowDataParam): Promise<Partial<PostComment>> {
+}: {
+  where: Prisma.PostCommentWhereUniqueInput;
+  select: TSelect;
+}): Promise<Prisma.PostCommentGetPayload<{ select: TSelect }>> {
   return await prisma.postComment.findUniqueOrThrow({ where, select });
 }
 
