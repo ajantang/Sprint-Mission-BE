@@ -23,8 +23,10 @@
   "name": "express-ts-server-template",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
+    "build": "tsc",
+    "start": "node dist/app.js",
     "dev": "set NODE_ENV=local && nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
