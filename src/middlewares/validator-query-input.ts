@@ -18,7 +18,6 @@ const validateQueryPageNum: ValidationChain = query("pageNum")
 
 const validateQueryOrderBy: ValidationChain = query("orderBy")
   .optional()
-  .optional()
   .isIn(Object.values(queryLimit.ORDER_BY))
   .withMessage(PATTERN_ERROR_MESSAGES["orderBy"]);
 

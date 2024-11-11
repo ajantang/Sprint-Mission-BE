@@ -5,9 +5,9 @@ import { validateAuthorization } from "../middlewares/validator-auth-input";
 import {
   validateCreatePostComment,
   validateUpdatePostComment,
+  validateParamPostCommentPostCommentId,
 } from "../middlewares/validator-post-comment-input";
 
-import { validateListQuery } from "../middlewares/validator-query-input";
 import { isAuthorizedPostCommentIdParam } from "../middlewares/post-comment";
 import { validateToken } from "../middlewares/token";
 import postCommentController from "../controllers/post-comment-controller";
@@ -24,15 +24,15 @@ postCommentRouter
     postCommentController.createPostComment
   )
   .get(
-    "/",
-    validateListQuery,
+    "/:postCommentId",
+    validateParamPostCommentPostCommentId,
     validationHandler,
-    postCommentController.getPostCommentList
+    postCommentController.getPostComment
   )
-  .get("/:postCommentId", postCommentController.getPostComment)
   .patch(
     "/:postCommentId",
     validateAuthorization,
+    validateParamPostCommentPostCommentId,
     validateUpdatePostComment,
     validationHandler,
     validateToken,
@@ -42,6 +42,7 @@ postCommentRouter
   .delete(
     "/:postCommentId",
     validateAuthorization,
+    validateParamPostCommentPostCommentId,
     validationHandler,
     validateToken,
     isAuthorizedPostCommentIdParam,

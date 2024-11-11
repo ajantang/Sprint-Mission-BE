@@ -5,6 +5,7 @@ import { validateAuthorization } from "../middlewares/validator-auth-input";
 import {
   validateCreateProductComment,
   validateUpdateProductComment,
+  validateParamProductCommentProductCommentId,
 } from "../middlewares/validator-product-comment-input";
 
 import { validateListQuery } from "../middlewares/validator-query-input";
@@ -23,10 +24,16 @@ productCommentRouter
     validateToken,
     productCommentController.createProductComment
   )
-  .get("/:productCommentId", productCommentController.getProductComment)
+  .get(
+    "/:productCommentId",
+    validateParamProductCommentProductCommentId,
+    validationHandler,
+    productCommentController.getProductComment
+  )
   .patch(
     "/:productCommentId",
     validateAuthorization,
+    validateParamProductCommentProductCommentId,
     validateUpdateProductComment,
     validationHandler,
     validateToken,
@@ -36,6 +43,7 @@ productCommentRouter
   .delete(
     "/:productCommentId",
     validateAuthorization,
+    validateParamProductCommentProductCommentId,
     validationHandler,
     validateToken,
     isAuthorizedProductCommentIdParam,

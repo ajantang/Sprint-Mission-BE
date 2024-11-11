@@ -1,4 +1,4 @@
-import { body, query, ValidationChain } from "express-validator";
+import { body, param, ValidationChain } from "express-validator";
 
 import { postCommentSchema } from "../constants/post-comment";
 
@@ -18,12 +18,21 @@ const validateBodyPostCommentContent: ValidationChain = body("content")
   })
   .withMessage(LENGTH_ERROR_MESSAGES["postCommentContent"]);
 
-const validateQueryPostCommentPostId: ValidationChain = query("postId")
+const validateParamPostCommentPostId: ValidationChain = param("postId")
   .notEmpty()
   .withMessage(EMPTY_ERROR_MESSAGES["postId"])
   .bail()
   .isUUID()
   .withMessage(PATTERN_ERROR_MESSAGES["postId"]);
+
+export const validateParamPostCommentPostCommentId: ValidationChain = param(
+  "postCommentId"
+)
+  .notEmpty()
+  .withMessage(EMPTY_ERROR_MESSAGES["postCommentId"])
+  .bail()
+  .isUUID()
+  .withMessage(PATTERN_ERROR_MESSAGES["postCommentId"]);
 
 const validateBodyPostCommentPostId: ValidationChain = body("postId")
   .notEmpty()
@@ -38,9 +47,10 @@ export const validateCreatePostComment: ValidationChain[] = [
 ];
 
 export const validateGetPosttCommentList: ValidationChain[] = [
-  validateQueryPostCommentPostId,
+  validateParamPostCommentPostId,
 ];
 
 export const validateUpdatePostComment: ValidationChain[] = [
+  validateParamPostCommentPostCommentId,
   validateBodyPostCommentContent,
 ];

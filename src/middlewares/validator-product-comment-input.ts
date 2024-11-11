@@ -1,4 +1,4 @@
-import { body, query, ValidationChain } from "express-validator";
+import { body, param, ValidationChain } from "express-validator";
 
 import { productCommentSchema } from "../constants/product-comment";
 
@@ -18,12 +18,20 @@ const validateBodyProductCommentContent: ValidationChain = body("content")
   })
   .withMessage(LENGTH_ERROR_MESSAGES["productCommentContent"]);
 
-const validateQueryProductCommentProductId: ValidationChain = query("productId")
+const validateParamProductCommentProductId: ValidationChain = param("productId")
   .notEmpty()
   .withMessage(EMPTY_ERROR_MESSAGES["productId"])
   .bail()
   .isUUID()
   .withMessage(PATTERN_ERROR_MESSAGES["productId"]);
+
+export const validateParamProductCommentProductCommentId: ValidationChain =
+  param("productCommentId")
+    .notEmpty()
+    .withMessage(EMPTY_ERROR_MESSAGES["productCommentId"])
+    .bail()
+    .isUUID()
+    .withMessage(PATTERN_ERROR_MESSAGES["productCommentId"]);
 
 const validateBodyProductCommentProductId: ValidationChain = body("productId")
   .notEmpty()
@@ -38,9 +46,10 @@ export const validateCreateProductComment: ValidationChain[] = [
 ];
 
 export const validateGetProductCommentList: ValidationChain[] = [
-  validateQueryProductCommentProductId,
+  validateParamProductCommentProductId,
 ];
 
 export const validateUpdateProductComment: ValidationChain[] = [
+  validateParamProductCommentProductCommentId,
   validateBodyProductCommentContent,
 ];
