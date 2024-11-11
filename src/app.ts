@@ -1,3 +1,4 @@
+import cors from "cors";
 import express, { Express } from "express";
 
 import { PORT } from "./config";
@@ -18,6 +19,7 @@ import {
 
 const app: Express = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.use("/auth", authRouter);
