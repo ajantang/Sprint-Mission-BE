@@ -24,12 +24,10 @@ export function productDetailMapper(data: ProductDetailData) {
       data.ProductComment?.map((comment) => ({
         id: comment.id,
         content: comment.content,
+        ownerId: comment.User.id,
+        ownerNickname: comment.User.nickname,
+        ownerImage: comment.User.image || null,
         createdAt: comment.createdAt,
-        User: {
-          id: comment.User.id,
-          nickname: comment.User.nickname,
-          image: comment.User.image || null,
-        },
       })) || [],
   };
 }
