@@ -8,10 +8,13 @@ import {
   PostCommentUpdateDataParam,
 } from "../types/post-comment-types";
 
-async function createData({
+async function createData<TSelect extends Prisma.PostCommentSelect>({
   data,
   select,
-}: PostCommentCreateDataParam): Promise<Partial<PostComment>> {
+}: {
+  data: Prisma.PostCommentCreateInput;
+  select: TSelect;
+}): Promise<Prisma.PostCommentGetPayload<{ select: TSelect }>> {
   return await prisma.postComment.create({ data, select });
 }
 
