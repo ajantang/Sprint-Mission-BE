@@ -45,9 +45,7 @@ async function getPostCommentList({
   page,
   pageSize,
 }: GetPostCommentListParam): Promise<PostCommentListInfo> {
-  const PostCommentOrderBy = {
-    createdAt: ORDER_BY[orderBy] || DEFAULT_ORDER_BY,
-  };
+  const PostCommentOrderBy = ORDER_BY[orderBy] || DEFAULT_ORDER_BY;
   const where = { postId };
   const iPage: number = parseInt(page as unknown as string) || 1;
   const iPageSize: number =

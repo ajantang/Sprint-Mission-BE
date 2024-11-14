@@ -76,7 +76,7 @@ async function getPostList({
   pageSize,
   keyword,
 }: GetPostListParam): Promise<PostListInfo> {
-  const postOrderBy = { createdAt: ORDER_BY[orderBy] || DEFAULT_ORDER_BY };
+  const postOrderBy = ORDER_BY[orderBy] || DEFAULT_ORDER_BY;
   const where = {
     ...(keyword && {
       OR: [{ name: { contains: keyword } }, { content: { contains: keyword } }],
@@ -108,7 +108,7 @@ async function getPost({
     id: postId,
   };
 
-  const result: Partial<Post> = await postRepository.findUniqueOrThrowData({
+  const result = await postRepository.findUniqueOrThrowData({
     where,
     select: postDetailSelect(userId),
   });

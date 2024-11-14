@@ -55,7 +55,8 @@ interface PostCommentWhereInput {
   where: Prisma.PostCommentWhereInput;
 }
 interface PostCommentPagenationInput {
-  orderBy: { [id: string]: string };
+  orderBy: Prisma.PostCommentOrderByWithRelationInput;
+  // orderBy: { [id: string]: string };
   skip: number;
   take: number;
 }

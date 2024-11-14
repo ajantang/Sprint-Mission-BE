@@ -58,7 +58,8 @@ interface PostWhereInput {
   where: Prisma.PostWhereInput;
 }
 interface PostPagenationInput {
-  orderBy: { [id: string]: string };
+  orderBy: Prisma.PostOrderByWithRelationInput;
+  // orderBy: { [id: string]: string };
   skip: number;
   take: number;
 }
@@ -91,8 +92,8 @@ export interface PostDetailData {
   content: string;
   favoriteCount: number;
   createdAt: Date;
-  PostImage: { image: string }[];
-  User: {
+  PostImage?: { image: string }[];
+  User?: {
     id: string;
     nickname: string;
     image: string | null;
@@ -120,11 +121,9 @@ export interface PostDetailInfo extends PostBaseInfo {
         id: string;
         content: string;
         createdAt: Date;
-        User: {
-          id: string;
-          nickname: string;
-          image: string | null;
-        };
+        ownerId: string;
+        ownerImage: string | null;
+        ownerNickname: string;
       }>
     | undefined;
 }

@@ -68,7 +68,8 @@ interface ProductWhereInput {
   where: Prisma.ProductWhereInput;
 }
 interface ProductPagenationInput {
-  orderBy: { [id: string]: string };
+  orderBy: Prisma.ProductOrderByWithRelationInput;
+  // orderBy: { [id: string]: string };
   skip: number;
   take: number;
 }
@@ -142,11 +143,9 @@ export interface ProductDetailInfo extends ProductBaseInfo {
         id: string;
         content: string;
         createdAt: Date;
-        User: {
-          id: string;
-          nickname: string;
-          image: string | null;
-        };
+        ownerId: string;
+        ownerImage: string | null;
+        ownerNickname: string;
       }>
     | undefined;
 }

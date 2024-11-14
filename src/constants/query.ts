@@ -3,6 +3,7 @@ const MIN_LENGTH_PAGE_NUM: number = 1;
 enum ORDER_BY {
   recent = "recent",
   oldest = "oldest",
+  favorite = "favorite",
 }
 
 export const queryLimit = {

@@ -91,7 +91,7 @@ async function getProductList({
   pageSize,
   keyword,
 }: GetProductListParam): Promise<ProductListInfo> {
-  const productOrderBy = { createdAt: ORDER_BY[orderBy] || DEFAULT_ORDER_BY };
+  const productOrderBy = ORDER_BY[orderBy] || DEFAULT_ORDER_BY;
   const where = {
     ...(keyword && {
       OR: [

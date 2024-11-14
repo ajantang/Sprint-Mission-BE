@@ -45,9 +45,7 @@ async function getProductCommentList({
   page,
   pageSize,
 }: GetProductCommentListParam): Promise<ProductCommentListInfo> {
-  const ProductCommentOrderBy = {
-    createdAt: ORDER_BY[orderBy] || DEFAULT_ORDER_BY,
-  };
+  const ProductCommentOrderBy = ORDER_BY[orderBy] || DEFAULT_ORDER_BY;
   const where = { productId };
   const iPage: number = parseInt(page as unknown as string) || 1;
   const iPageSize: number =

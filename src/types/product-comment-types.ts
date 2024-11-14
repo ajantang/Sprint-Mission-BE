@@ -55,7 +55,8 @@ interface ProductCommentWhereInput {
   where: Prisma.ProductCommentWhereInput;
 }
 interface ProductCommentPagenationInput {
-  orderBy: { [id: string]: string };
+  orderBy: Prisma.ProductCommentOrderByWithRelationInput;
+  // orderBy: { [id: string]: string };
   skip: number;
   take: number;
 }
