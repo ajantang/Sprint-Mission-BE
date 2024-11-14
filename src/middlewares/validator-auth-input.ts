@@ -26,7 +26,14 @@ const validateBodyPassword: ValidationChain = body("password")
     min: userSchema.MIN_LENGTH_PASSWORD,
     max: userSchema.MAX_LENGTH_PASSWORD,
   })
-  .withMessage(LENGTH_ERROR_MESSAGES["password"]);
+  .withMessage(LENGTH_ERROR_MESSAGES["password"])
+  .bail()
+  .custom((value) => {
+    if (!/^([a-z]|[A-Z]|[0-9]|[!@#$%^&*])+$/.test(value)) {
+      throw new Error(PATTERN_ERROR_MESSAGES["password"]);
+    }
+    return true;
+  });
 
 const validateBodyNickname: ValidationChain = body("nickname")
   .notEmpty()

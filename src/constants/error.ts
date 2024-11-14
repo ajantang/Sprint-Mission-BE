@@ -51,6 +51,7 @@ export const CUSTOM_ERROR_INFO: { [errCode: number]: string } = {
   40089: "데이터의 길이가 유효하지 않습니다",
   40090: "이메일 형식이 아닙니다",
   40091: `orderBy는 ${queryLimit.ORDER_BY.recent} 또는 ${queryLimit.ORDER_BY.oldest} 중 하나여야 합니다`,
+  40092: `지원하는 비밀번호 형식이 아닙니다`,
   40094: "postCommentId 형식이 유효하지 않습니다",
   40095: "productCommentId 형식이 유효하지 않습니다",
   40096: "postId 형식이 유효하지 않습니다",
@@ -129,6 +130,7 @@ export const LENGTH_ERROR_MESSAGES: { [errVariable: string]: string } = {
 export const PATTERN_ERROR_MESSAGES: { [errVariable: string]: string } = {
   email: CUSTOM_ERROR_INFO[40090],
   orderBy: CUSTOM_ERROR_INFO[40091],
+  password: CUSTOM_ERROR_INFO[40092],
   postCommentId: CUSTOM_ERROR_INFO[40094],
   productCommentId: CUSTOM_ERROR_INFO[40095],
   postId: CUSTOM_ERROR_INFO[40096],
