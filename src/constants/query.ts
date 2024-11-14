@@ -1,5 +1,5 @@
-const MIN_LENGTH_PAGE = 1;
-const MIN_LENGTH_PAGE_NUM = 1;
+const MIN_LENGTH_PAGE: number = 1;
+const MIN_LENGTH_PAGE_NUM: number = 1;
 enum ORDER_BY {
   recent = "recent",
   oldest = "oldest",

@@ -1,5 +1,5 @@
-const MIN_LENGTH_CONTENT = 1;
-const MAX_LENGTH_CONTENT = 1024;
+const MIN_LENGTH_CONTENT: number = 1;
+const MAX_LENGTH_CONTENT: number = 1024;
 
 export const productCommentSchema = {
   MIN_LENGTH_CONTENT,

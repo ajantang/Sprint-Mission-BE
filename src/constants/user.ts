@@ -5,7 +5,6 @@ const MAX_LENGTH_NICKNAME: number = 50;
 const MIN_LENGTH_PASSWORD: number = 8;
 const MAX_LENGTH_PASSWORD: number = 24;
 const MAX_LENGTH_EMAIL: number = 254;
-const MAX_LENGTH_IMAGE: number = 1024;
 
 export const userSchema: { [id: string]: number } = {
   MIN_LENGTH_NAME,
@@ -15,5 +14,4 @@ export const userSchema: { [id: string]: number } = {
   MIN_LENGTH_PASSWORD,
   MAX_LENGTH_PASSWORD,
   MAX_LENGTH_EMAIL,
-  MAX_LENGTH_IMAGE,
 };

@@ -1,9 +1,9 @@
-const MIN_LENGTH_NAME = 1;
-const MAX_LENGTH_NAME = 50;
-const MIN_LENGTH_DESCRIPTION = 1;
-const MAX_LENGTH_DESCRIPTION = 1024;
-const MIN_VALUE_PRICE = 1;
-const MAX_VALUE_PRICE = 9999999999;
+const MIN_LENGTH_NAME: number = 1;
+const MAX_LENGTH_NAME: number = 50;
+const MIN_LENGTH_DESCRIPTION: number = 1;
+const MAX_LENGTH_DESCRIPTION: number = 1024;
+const MIN_VALUE_PRICE: number = 1;
+const MAX_VALUE_PRICE: number = 9999999999;
 
 export const productSchema = {
   MIN_LENGTH_NAME,
@@ -14,5 +14,5 @@ export const productSchema = {
   MAX_VALUE_PRICE,
 };
 
-export const DEFAULT_PRODUCT_TAKE = 10;
-export const DEFAULT_COMMENT_TAKE = 100;
+export const DEFAULT_PRODUCT_TAKE: number = 10;
+export const DEFAULT_COMMENT_TAKE: number = 100;
