@@ -29,7 +29,10 @@ export async function verifyPassword({
   plainPassword: string;
 }): Promise<boolean> {
   try {
-    const isMatch = await argon2.verify(hashedPassword, plainPassword);
+    const secretKey = Buffer.from(ARGON2_SECRET_KEY);
+    const isMatch = await argon2.verify(hashedPassword, plainPassword, {
+      secret: secretKey,
+    });
     return isMatch;
   } catch (error) {
     throw new CustomError(50022);

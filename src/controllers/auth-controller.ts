@@ -4,7 +4,11 @@ import { User } from "@prisma/client";
 import authService from "../services/auth-service";
 import { CustomError } from "../utils/error";
 
-import { UserSignUpData, UserTokenInfo } from "../types/user-types";
+import {
+  UserSignInData,
+  UserSignUpData,
+  UserTokenInfo,
+} from "../types/user-types";
 
 async function signUp(
   req: Request,
@@ -36,12 +40,13 @@ async function signIn(
   next: NextFunction
 ): Promise<void> {
   try {
-    const { email, password }: UserSignUpData = req.body;
+    const { email, password }: UserSignInData = req.body;
     const authInfo: UserTokenInfo | null | boolean = await authService.signIn({
       email,
       password,
     });
 
+    console.log("signIn : ", authInfo);
     if (authInfo === null) {
       throw new CustomError(40030);
     }

@@ -61,7 +61,7 @@ async function signIn({
       plainPassword: password,
     });
 
-    if (isMatch) {
+    if (!isMatch) {
       return false;
     }
 
