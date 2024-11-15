@@ -22,8 +22,8 @@ const app: Express = express();
 app.use(
   cors({
     origin: [
-      "http://localhost:3000/",
-      "https://sprint-fe-git-next-sprint11-snowrangs-projects.vercel.app/",
+      "http://localhost:3000",
+      "https://sprint-fe-git-next-sprint11-snowrangs-projects.vercel.app",
     ],
     credentials: true,
   })
