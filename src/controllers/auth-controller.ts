@@ -46,7 +46,6 @@ async function signIn(
       password,
     });
 
-    console.log("signIn : ", authInfo);
     if (authInfo === null) {
       throw new CustomError(40030);
     }

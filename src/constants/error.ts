@@ -64,7 +64,7 @@ export const CUSTOM_ERROR_INFO: { [errCode: number]: string } = {
   40301: "post 수정 권한이 없습니다",
   40302: "product 수정 권한이 없습니다",
   40303: "comment 수정 권한이 없습니다",
-  40400: "요청하신 존재하지 않습니다",
+  40400: "요청하신 자료 존재하지 않습니다",
   40500: "Method Not Allowed",
   40600: "Not Acceptable",
   40800: "Request Timeout",
