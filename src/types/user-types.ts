@@ -53,7 +53,7 @@ interface UserWhereUniqueInpu {
 
 export interface UserCreateDataParam extends UserCreateInput, UserSelect {}
 
-export interface UserFindUniqueOrThrowDataParam
+export interface UserFindUniqueDataParam
   extends UserWhereUniqueInpu,
     UserSelect {}
 

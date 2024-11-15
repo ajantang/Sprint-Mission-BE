@@ -1,9 +1,9 @@
-import Prisma, { User } from "@prisma/client";
+import { User } from "@prisma/client";
 
 import prisma from "./prisma";
 import {
   UserCreateDataParam,
-  UserFindUniqueOrThrowDataParam,
+  UserFindUniqueDataParam,
   UserUpdateDataParam,
 } from "../types/user-types";
 
@@ -14,10 +14,17 @@ async function createData({
   return await prisma.user.create({ data, select });
 }
 
+async function findUniqueData({
+  where,
+  select,
+}: UserFindUniqueDataParam): Promise<User | null> {
+  return await prisma.user.findUnique({ where, select });
+}
+
 async function findUniqueOrThrowData({
   where,
   select,
-}: UserFindUniqueOrThrowDataParam): Promise<User> {
+}: UserFindUniqueDataParam): Promise<User> {
   return await prisma.user.findUniqueOrThrow({ where, select });
 }
 
@@ -31,6 +38,7 @@ async function updateData({
 
 export default {
   createData,
+  findUniqueData,
   findUniqueOrThrowData,
   updateData,
 };
