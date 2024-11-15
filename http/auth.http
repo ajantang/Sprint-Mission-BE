@@ -39,6 +39,6 @@ Content-Type : application/json
 POST https://sprint-be.onrender.com/auth/sign-in
 
 {
-    "email" : "codeit0@codeit.com",
+    "email" : "codeit1@codeit.com",
     "password" : "!codeit1"
 }
