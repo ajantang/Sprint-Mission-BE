@@ -23,5 +23,5 @@ export function productCommentListMapper({
 }) {
   const mappedProductCommentList: productCommentMapperReturnType[] =
     productCommentList.map(productCommentMapper);
-  return { totalCount: count, posts: mappedProductCommentList };
+  return { totalCount: count, comments: mappedProductCommentList };
 }

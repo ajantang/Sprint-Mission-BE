@@ -23,5 +23,5 @@ export function postCommentListMapper({
 }) {
   const mappedPostCommentList: PostCommentMapperReturnType[] =
     postCommentList.map(postCommentMapper);
-  return { totalCount: count, posts: mappedPostCommentList };
+  return { totalCount: count, comments: mappedPostCommentList };
 }
