@@ -10,6 +10,7 @@ import { validateListQuery } from "../middlewares/validator-query-input";
 import { isAuthorizedPostIdParam } from "../middlewares/post";
 import { validateToken, checkToken } from "../middlewares/token";
 import postController from "../controllers/post-controller";
+import postCommentController from "../controllers/post-comment-controller";
 
 const postRouter: Router = express.Router();
 
@@ -35,6 +36,12 @@ postRouter
     validationHandler,
     validateToken,
     postController.getPost
+  )
+  .get(
+    "/:postId/comments",
+    validateListQuery,
+    validationHandler,
+    postCommentController.getPostCommentList
   )
   .patch(
     "/:postId",
