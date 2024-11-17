@@ -25,6 +25,12 @@ productCommentRouter
     productCommentController.createProductComment
   )
   .get(
+    "/",
+    validateListQuery,
+    validationHandler,
+    productCommentController.getProductCommentList
+  )
+  .get(
     "/:productCommentId",
     validateParamProductCommentProductCommentId,
     validationHandler,
