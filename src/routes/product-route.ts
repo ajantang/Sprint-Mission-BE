@@ -10,6 +10,7 @@ import { validateListQuery } from "../middlewares/validator-query-input";
 import { isAuthorizedProductIdParam } from "../middlewares/product";
 import { validateToken, checkToken } from "../middlewares/token";
 import productController from "../controllers/product-controller";
+import productCommentController from "../controllers/product-comment-controller";
 
 const productRouter: Router = express.Router();
 
@@ -35,6 +36,12 @@ productRouter
     validationHandler,
     validateToken,
     productController.getProduct
+  )
+  .get(
+    "/:productId/comments",
+    validateListQuery,
+    validationHandler,
+    productCommentController.getProductCommentList
   )
   .patch(
     "/:productId",
