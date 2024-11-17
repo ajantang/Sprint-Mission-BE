@@ -99,5 +99,5 @@ export interface ProductCommentBaseInfo {
 
 export interface ProductCommentListInfo {
   totalCount: number;
-  posts: ProductCommentBaseInfo[];
+  comments: ProductCommentBaseInfo[];
 }

@@ -64,8 +64,6 @@ async function getProductCommentList({
       select: productCommentSelect,
     })) as ProductCommentData[];
 
-  console.log("getProductCommentList : ", productCommentList);
-
   return productCommentListMapper({ count, productCommentList });
 }
 
