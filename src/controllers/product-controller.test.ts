@@ -4,11 +4,10 @@ import productService from "../services/product-service";
 import {
   ProductBaseInfo,
   ProductListInfo,
-  ProductDetailData,
+  ProductDetailInfo,
 } from "../types/product-types";
-import { productDetailMapper } from "../services/mappers/product-mapper";
+// 에러 관련 테스트도 작성을 계획했으나, CRUD 로직의 유닛 테스트 자체가 비효율적이고 의미없어서 작성 안함
 import { CustomError } from "../utils/error";
-import { Product, ProductImage } from "@prisma/client";
 
 jest.mock("../services/product-service");
 
@@ -128,11 +127,7 @@ describe("Product Controller", () => {
 
   describe("getProduct", () => {
     test("getProduct success : status(200)", async () => {
-      type ProductDetailMapperReturnType = ReturnType<
-        typeof productDetailMapper
-      >;
-
-      const mockProduct: ProductDetailMapperReturnType = {
+      const mockProduct: ProductDetailInfo = {
         id: "1",
         name: "test product",
         description: "test description",

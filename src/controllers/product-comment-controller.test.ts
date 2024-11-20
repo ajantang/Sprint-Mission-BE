@@ -5,7 +5,6 @@ import {
   ProductCommentBaseInfo,
   ProductCommentListInfo,
 } from "../types/product-comment-types";
-import { productCommentMapper } from "../services/mappers/product-comment-mapper";
 
 jest.mock("../services/product-comment-service");
 
@@ -64,14 +63,7 @@ describe("Product Comment Controller", () => {
 
   describe("getProductCommentList", () => {
     test("getProductCommentList success : status(200)", async () => {
-      type productCommentMapperReturnType = ReturnType<
-        typeof productCommentMapper
-      >;
-
-      const mockProductListComment: {
-        totalCount: number;
-        comments: productCommentMapperReturnType[];
-      } = {
+      const mockProductListComment: ProductCommentListInfo = {
         totalCount: 1,
         comments: [
           {
