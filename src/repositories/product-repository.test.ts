@@ -43,7 +43,7 @@ describe("Product Repository", () => {
         description: "This is a test product.",
         price: 1000,
         userId: "uuid-user-123",
-        User: { connect: { id: "uuid-user-123" } }, // 관계 필드 포함
+        User: { connect: { id: "uuid-user-123" } },
       };
 
       (prisma.product.create as jest.Mock).mockResolvedValue(mockProduct);
