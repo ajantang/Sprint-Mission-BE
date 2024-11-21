@@ -22,7 +22,7 @@ describe("Product Controller", () => {
       status: jest.fn().mockReturnThis(),
       send: jest.fn(),
       locals: {
-        userId: "1",
+        userId: "uuid-user-123",
       },
     };
     mockNext = jest.fn();
@@ -31,14 +31,14 @@ describe("Product Controller", () => {
   describe("createProduct", () => {
     test("createProduct success : status(201)", async () => {
       const mockProduct: ProductBaseInfo = {
-        id: "1",
+        id: "uuid-product-123",
         name: "test product",
         description: "test description",
         price: 10000,
         favoriteCount: 0,
         images: ["image url1", "image url2"],
         tags: ["tag1", "tag2"],
-        ownerId: "1",
+        ownerId: "uuid-owner-user-123",
         ownerImage: "owner profile image url",
         ownerNickname: "tester",
         isFavorite: false,
@@ -63,7 +63,7 @@ describe("Product Controller", () => {
       );
 
       expect(productService.createProduct).toHaveBeenCalledWith({
-        userId: "1",
+        userId: "uuid-user-123",
         name: "test product",
         description: "test description",
         price: 10000,
@@ -81,14 +81,14 @@ describe("Product Controller", () => {
         totalCount: 1,
         products: [
           {
-            id: "1",
+            id: "uuid-product-123",
             name: "test product",
             description: "test description",
             price: 10000,
             favoriteCount: 0,
             images: ["image url1", "image url2"],
             tags: ["tag1", "tag2"],
-            ownerId: "1",
+            ownerId: "uuid-owner-user-123",
             ownerImage: "owner profile image url",
             ownerNickname: "tester",
             isFavorite: false,
@@ -114,7 +114,7 @@ describe("Product Controller", () => {
       );
 
       expect(productService.getProductList).toHaveBeenCalledWith({
-        userId: "1",
+        userId: "uuid-user-123",
         orderBy: "recent",
         page: "1",
         pageSize: "10",
@@ -128,23 +128,23 @@ describe("Product Controller", () => {
   describe("getProduct", () => {
     test("getProduct success : status(200)", async () => {
       const mockProduct: ProductDetailInfo = {
-        id: "1",
+        id: "uuid-product-123",
         name: "test product",
         description: "test description",
         price: 10000,
         favoriteCount: 0,
         images: ["image url1", "image url2"],
         tags: ["tag1", "tag2"],
-        ownerId: "1",
+        ownerId: "uuid-owner-user-123",
         ownerImage: "owner profile image url",
         ownerNickname: "tester",
         isFavorite: false,
         createdAt: new Date(),
         comments: [
           {
-            id: "1",
+            id: "uuid-product-comment-123",
             content: "comment content",
-            ownerId: "1",
+            ownerId: "uuid-owner-user-123",
             ownerNickname: "comment owner nickname",
             ownerImage: "comment owner profile image url",
             createdAt: new Date(),
@@ -153,7 +153,7 @@ describe("Product Controller", () => {
       };
 
       mockReq.params = {
-        productId: "1",
+        productId: "uuid-product-123",
       };
       (productService.getProduct as jest.Mock).mockResolvedValue(mockProduct);
 
@@ -164,8 +164,8 @@ describe("Product Controller", () => {
       );
 
       expect(productService.getProduct).toHaveBeenCalledWith({
-        userId: "1",
-        productId: "1",
+        userId: "uuid-user-123",
+        productId: "uuid-product-123",
       });
       expect(mockRes.status).toHaveBeenCalledWith(200);
       expect(mockRes.send).toHaveBeenCalledWith(mockProduct);
@@ -175,22 +175,22 @@ describe("Product Controller", () => {
   describe("modifyProduct", () => {
     test("modifyProduct success : status(200)", async () => {
       const mockProduct: ProductBaseInfo = {
-        id: "1",
+        id: "uuid-product-123",
         name: "test product_",
         description: "test description_",
         price: 90000,
         favoriteCount: 0,
         images: ["image url1"],
         tags: ["tag1", "tag2", "tag3"],
-        ownerId: "1",
+        ownerId: "uuid-owner-user-123",
         ownerImage: "owner profile image url",
         ownerNickname: "tester",
         isFavorite: false,
         createdAt: new Date(),
       };
 
-      mockReq.params = { productId: "1" };
-      mockRes.locals = { userId: "1" };
+      mockReq.params = { productId: "uuid-product-123" };
+      mockRes.locals = { userId: "uuid-user-123" };
       mockReq.body = {
         name: "test product_",
         description: "test description_",
@@ -209,8 +209,8 @@ describe("Product Controller", () => {
       );
 
       expect(productService.modifyProduct).toHaveBeenCalledWith({
-        userId: "1",
-        productId: "1",
+        userId: "uuid-user-123",
+        productId: "uuid-product-123",
         name: "test product_",
         description: "test description_",
         price: 90000,
@@ -224,7 +224,7 @@ describe("Product Controller", () => {
 
   describe("deleteProduct", () => {
     test("deleteProduct success : status(200)", async () => {
-      mockReq.params = { productId: "1" };
+      mockReq.params = { productId: "uuid-product-123" };
       (productService.deleteProduct as jest.Mock).mockResolvedValue(null);
 
       await productController.deleteProduct(
@@ -233,7 +233,9 @@ describe("Product Controller", () => {
         mockNext
       );
 
-      expect(productService.deleteProduct).toHaveBeenCalledWith("1");
+      expect(productService.deleteProduct).toHaveBeenCalledWith(
+        "uuid-product-123"
+      );
       expect(mockRes.status).toHaveBeenCalledWith(204);
     });
   });
@@ -241,21 +243,21 @@ describe("Product Controller", () => {
   describe("increaseProductFavorite", () => {
     test("increaseProductFavorite success : status(200)", async () => {
       const mockProduct: ProductBaseInfo = {
-        id: "1",
+        id: "uuid-product-123",
         name: "test product",
         description: "test description",
         price: 10000,
         favoriteCount: 0,
         images: ["image url1", "image url2"],
         tags: ["tag1", "tag2"],
-        ownerId: "1",
+        ownerId: "uuid-owner-user-123",
         ownerImage: "owner profile image url",
         ownerNickname: "tester",
         isFavorite: true,
         createdAt: new Date(),
       };
-      mockReq.params = { productId: "1" };
-      mockRes.locals = { userId: "1" };
+      mockReq.params = { productId: "uuid-product-123" };
+      mockRes.locals = { userId: "uuid-user-123" };
       (productService.increaseProductFavorite as jest.Mock).mockResolvedValue(
         mockProduct
       );
@@ -267,8 +269,8 @@ describe("Product Controller", () => {
       );
 
       expect(productService.increaseProductFavorite).toHaveBeenCalledWith({
-        userId: "1",
-        productId: "1",
+        userId: "uuid-user-123",
+        productId: "uuid-product-123",
       });
       expect(mockRes.status).toHaveBeenCalledWith(200);
       expect(mockRes.send).toHaveBeenCalledWith(mockProduct);
@@ -278,21 +280,21 @@ describe("Product Controller", () => {
   describe("decreaseProductFavorite", () => {
     test("decreaseProductFavorite success : status(200)", async () => {
       const mockProduct: ProductBaseInfo = {
-        id: "1",
+        id: "uuid-product-123",
         name: "test product",
         description: "test description",
         price: 10000,
         favoriteCount: 0,
         images: ["image url1", "image url2"],
         tags: ["tag1", "tag2"],
-        ownerId: "1",
+        ownerId: "uuid-owner-user-123",
         ownerImage: "owner profile image url",
         ownerNickname: "tester",
         isFavorite: false,
         createdAt: new Date(),
       };
-      mockReq.params = { productId: "1" };
-      mockRes.locals = { userId: "1" };
+      mockReq.params = { productId: "uuid-product-123" };
+      mockRes.locals = { userId: "uuid-user-123" };
       (productService.decreaseProductFavorite as jest.Mock).mockResolvedValue(
         mockProduct
       );
@@ -304,8 +306,8 @@ describe("Product Controller", () => {
       );
 
       expect(productService.decreaseProductFavorite).toHaveBeenCalledWith({
-        userId: "1",
-        productId: "1",
+        userId: "uuid-user-123",
+        productId: "uuid-product-123",
       });
       expect(mockRes.status).toHaveBeenCalledWith(200);
       expect(mockRes.send).toHaveBeenCalledWith(mockProduct);

@@ -19,8 +19,14 @@ describe("ProductImage Repository", () => {
   describe("createManyData", () => {
     it("createManyData success", async () => {
       const mockData = [
-        { image: "https://example.com/image1.svg", productId: "1" },
-        { image: "https://example.com/image2.svg", productId: "2" },
+        {
+          image: "https://example.com/image1.svg",
+          productId: "uuid-product-123",
+        },
+        {
+          image: "https://example.com/image2.svg",
+          productId: "uuid-product-456",
+        },
       ];
 
       const mockResponse = { count: 2 };
@@ -40,7 +46,7 @@ describe("ProductImage Repository", () => {
 
   describe("deleteManyData", () => {
     it("deleteManyData success", async () => {
-      const mockWhere = { productId: "1" };
+      const mockWhere = { productId: "uuid-product-123" };
 
       (prisma.productImage.deleteMany as jest.Mock).mockResolvedValue(
         undefined

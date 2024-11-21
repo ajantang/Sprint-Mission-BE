@@ -33,7 +33,7 @@ describe("Auth Controller", () => {
   describe("signUp", () => {
     test("sign-in success : status(201)", async () => {
       const mockUser: Partial<User> = {
-        id: "1",
+        id: "uuid-user-123",
         email: "test@example.com",
         nickname: "tester",
         name: "유재석",
@@ -93,7 +93,7 @@ describe("Auth Controller", () => {
   describe("signIn", () => {
     test("sign-in success : status(200)", async () => {
       const mockTokenInfo: UserIndetificationInfo = {
-        id: "1",
+        id: "uuid-user-123",
         nickname: "tester",
         name: "유재석",
         email: "test@example.com",

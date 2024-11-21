@@ -19,7 +19,7 @@ describe("Product Comment Controller", () => {
       status: jest.fn().mockReturnThis(),
       send: jest.fn(),
       locals: {
-        userId: "1",
+        userId: "uuid-user-123",
       },
     };
     mockNext = jest.fn();
@@ -28,17 +28,17 @@ describe("Product Comment Controller", () => {
   describe("createProductComment", () => {
     test("createProductComment success : status(201)", async () => {
       const mockProductComment: ProductCommentBaseInfo = {
-        id: "1",
-        productId: "1",
+        id: "uuid-product-comment-456",
+        productId: "uuid-product-123",
         content: "test content",
-        ownerId: "1",
+        ownerId: "uuid-owner-user-123",
         ownerImage: "owner profile image url",
         ownerNickname: "tester",
         createdAt: new Date(),
       };
 
       mockReq.body = {
-        productId: "1",
+        productId: "uuid-product-123",
         content: "test content",
       };
       (
@@ -52,8 +52,8 @@ describe("Product Comment Controller", () => {
       );
 
       expect(productCommentService.createProductComment).toHaveBeenCalledWith({
-        userId: "1",
-        productId: "1",
+        userId: "uuid-user-123",
+        productId: "uuid-product-123",
         content: "test content",
       });
       expect(mockRes.status).toHaveBeenCalledWith(201);
@@ -67,10 +67,10 @@ describe("Product Comment Controller", () => {
         totalCount: 1,
         comments: [
           {
-            id: "1",
-            productId: "1",
+            id: "uuid-product-comment-456",
+            productId: "uuid-product-123",
             content: "test comment",
-            ownerId: "1",
+            ownerId: "uuid-owner-user-123",
             ownerImage: "owner profile image url",
             ownerNickname: "tester",
             createdAt: new Date(),
@@ -78,7 +78,7 @@ describe("Product Comment Controller", () => {
         ],
       };
 
-      mockReq.params = { productId: "1" };
+      mockReq.params = { productId: "uuid-product-123" };
       mockReq.query = {
         orderBy: "recent",
         page: "1",
@@ -96,7 +96,7 @@ describe("Product Comment Controller", () => {
       );
 
       expect(productCommentService.getProductCommentList).toHaveBeenCalledWith({
-        productId: "1",
+        productId: "uuid-product-123",
         orderBy: "recent",
         page: "1",
         pageSize: "10",
@@ -109,10 +109,10 @@ describe("Product Comment Controller", () => {
   describe("getProductComment", () => {
     test("getProductComment success : status(200)", async () => {
       const mockProductComment: ProductCommentBaseInfo = {
-        id: "1",
-        productId: "1",
+        id: "uuid-product-comment-456",
+        productId: "uuid-product-123",
         content: "test content",
-        ownerId: "1",
+        ownerId: "uuid-owner-user-123",
         ownerImage: "owner profile image url",
         ownerNickname: "tester",
         createdAt: new Date(),
@@ -139,10 +139,10 @@ describe("Product Comment Controller", () => {
   describe("modifyProductComment", () => {
     test("modifyProductComment success : status(200)", async () => {
       const mockProductComment: ProductCommentBaseInfo = {
-        id: "1",
-        productId: "1",
+        id: "uuid-product-comment-456",
+        productId: "uuid-product-123",
         content: "test content_",
-        ownerId: "1",
+        ownerId: "uuid-owner-user-123",
         ownerImage: "owner profile image url",
         ownerNickname: "tester",
         createdAt: new Date(),
