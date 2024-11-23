@@ -3,12 +3,14 @@ import path from "path";
 
 const NODE_ENV: string = process.env.NODE_ENV || "production";
 const envFilePath: string = path.resolve(`./.env.${NODE_ENV}`).trim();
-
-dotenv.config({ path: envFilePath });
+dotenv.config({ debug: true });
+// dotenv.config({ path: envFilePath });
 
 console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
 console.log(`DATABASE_URL: ${process.env.DATABASE_URL}`);
 console.log(`PORT: ${process.env.PORT}`);
+console.log(process.cwd());
+console.log(`envFilePath :${envFilePath}`);
 
 export const config: {
   DATABASE_URL: string;
