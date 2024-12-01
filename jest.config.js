@@ -10,6 +10,13 @@
 module.exports = {
   preset: "ts-jest",
   testEnvironment: "node",
+  coverageDirectory: "coverage",
+  collectCoverage: true,
+  collectCoverageFrom: [
+    "src/**/*.{ts,tsx}",
+    "!src/**/*.d.ts",
+    "!src/**/index.ts",
+  ],
   moduleDirectories: ["node_modules", "<rootDir>/src"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
