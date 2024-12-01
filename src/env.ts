@@ -25,6 +25,7 @@ export const config: {
   AWS_ACCESS_KEY_ID: string;
   AWS_SECRET_ACCESS_KEY: string;
   APP_DOMAIN: string;
+  AWS_S3_BUCKET_NAME: string;
 } = {
   DATABASE_URL: process.env.DATABASE_URL as string,
   PORT: process.env.PORT as string,
@@ -39,4 +40,5 @@ export const config: {
   AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID as string,
   AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY as string,
   APP_DOMAIN: process.env.APP_DOMAIN as string,
+  AWS_S3_BUCKET_NAME: process.env.AWS_S3_BUCKET_NAME as string,
 };
